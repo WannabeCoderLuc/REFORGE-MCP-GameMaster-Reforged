@@ -1,0 +1,5 @@
+﻿Icons used on this site:
+- Prinbles YetAnotherIcons (White SVG) — from GameMasterMod/GRAPHICS_UI_HUD_ICONS_LOGO_etc
+- Game Icon Pack v1.4 PNG (white, no-padding) — from the same graphics folder
+
+SunGraphica / GameDevMarket assets were intentionally not bundled (licence not suitable for a public GitHub Pages repo).
