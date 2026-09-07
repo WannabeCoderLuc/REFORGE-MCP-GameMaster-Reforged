@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="NEWGAMEMASTER — live scenario authoring for Arma Reforger Game Master, powered by reforge-mcp. Roadmap and project explanation." />
+  <meta name="description" content="NEWGAMEMASTER — a work-in-progress live scenario-authoring framework for Arma Reforger Game Master, built with reforge-mcp, an open-source Enfusion research server. Roadmap and project explanation." />
   <meta name="theme-color" content="#1a2218" />
   <title>NEWGAMEMASTER — Live Scenario Authoring for Arma Reforger</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,6 +23,8 @@
     <nav id="nav-menu" class="nav-links" data-nav-menu>
       <a href="#mission">Mission</a>
       <a href="#deliverables">Deliverables</a>
+      <a href="#today">What works</a>
+      <a href="#tools">Tools</a>
       <a href="#pillars">Pillars</a>
       <a href="#roadmap">Roadmap</a>
       <a href="#opensource">Open Source</a>
@@ -42,7 +44,12 @@
         <h1>Live scenario authoring inside a running Reforger session.</h1>
         <p class="hero-lede">
           An extensible Game Master framework aimed at Arma&nbsp;3 3DEN depth —
-          built for multiplayer, and researched with <strong>reforge-mcp</strong>.
+          built for multiplayer, and built with <strong>reforge-mcp</strong>,
+          the research server that comes first.
+        </p>
+        <p class="hero-note">
+          Work in progress, in the open. The research server is being built now;
+          the framework itself has not been implemented yet.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#roadmap">
@@ -56,7 +63,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          Phase 7 in progress · reforge-mcp v0.1.0 · M0 + M2 complete · 107 tests green
+          Phase 7 · reforge-mcp v0.1.0 · M0–M6 complete · 37 tools · 246 tests green
         </p>
       </div>
     </section>
@@ -104,14 +111,15 @@
             <div class="duo-head">
               <img src="assets/icons/flag.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Workshop-bound framework</p>
+                <p class="duo-label">Workshop-bound framework · designed, not yet built</p>
                 <h3>NEWGAMEMASTER</h3>
               </div>
             </div>
             <p>
-              A highly extensible live scenario-authoring layer on top of Reforger’s
-              native editor — extending transform, attributes, commands, UI panels,
-              triggers, save/load, permissions, and undo — without replacing vanilla Game Master.
+              A planned live scenario-authoring layer on top of Reforger’s native editor —
+              extending transform, attributes, commands, UI panels, triggers, save/load,
+              permissions, and undo — without replacing vanilla Game Master.
+              The extension contract is specified; implementation is Phase&nbsp;8.
             </p>
             <ul class="duo-list">
               <li><img src="assets/icons/Tick.svg" alt="" /> Content-only + scripted extension tiers</li>
@@ -125,23 +133,230 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Primary deliverable now</p>
+                <p class="duo-label">Being built now · 37 tools working</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
             <p>
               A research + knowledge-retrieval MCP server for Enfusion / Reforger,
               with an opt-in Workbench intervention profile for framework maintainers.
-              MIT-licensed; no Bohemia content redistributed.
+              MIT-licensed; no Bohemia content redistributed — every index is generated
+              from your own install.
             </p>
             <ul class="duo-list">
-              <li><img src="assets/icons/Tick.svg" alt="" /> <code>research</code> profile — T0/T1 knowledge + source read</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> <code>workbench</code> profile — gated write/mutate tools</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> 84,015 symbols sliced from installed <code>.pak</code> (~3&nbsp;s)</li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <code>research</code> profile — write tools are <em>absent</em>, not disabled</li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> 84,015 symbols sliced from the installed <code>.pak</code></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> 22,283 resources GUID-mapped by reference-chasing</li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> 8,968 classes with real inheritance + 57,194 usage edges</li>
               <li><img src="assets/icons/Tick.svg" alt="" /> Per-index version stamps — current / stale / unverified</li>
             </ul>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section id="today" class="section today">
+      <div class="section-inner">
+        <p class="eyebrow">What works today</p>
+        <h2>The research server, running.</h2>
+        <p class="section-lede">
+          Every index below is generated from your own Arma Reforger install and stamped with
+          the build it came from — so an answer can say “current”, “stale”, or “unverified”,
+          and never guess. Rebuilds are incremental: under a second once warm.
+        </p>
+
+        <div class="stat-grid">
+          <div class="stat">
+            <p class="stat-num">84,015</p>
+            <p class="stat-label">symbols sliced from engine sources</p>
+          </div>
+          <div class="stat">
+            <p class="stat-num">22,283</p>
+            <p class="stat-label">resources mapped to GUIDs</p>
+          </div>
+          <div class="stat">
+            <p class="stat-num">8,968</p>
+            <p class="stat-label">classes with verified inheritance</p>
+          </div>
+          <div class="stat">
+            <p class="stat-num">57,194</p>
+            <p class="stat-label">type-usage edges</p>
+          </div>
+        </div>
+
+        <div class="ask-grid">
+          <article class="ask">
+            <h3>“What does this class really inherit?”</h3>
+            <p>Read from the shipped code, not a documentation dump — which had some core
+              editor classes inheriting from their own subclasses.</p>
+          </article>
+          <article class="ask">
+            <h3>“Show me one method, not a 79 KB file.”</h3>
+            <p>Symbol-level slicing, and grep that reaches <em>inside</em> the game’s
+              <code>.pak</code> archives where ordinary tools cannot look.</p>
+          </article>
+          <article class="ask">
+            <h3>“Who else overrides this file?”</h3>
+            <p>Mods extend Reforger by claiming the same GUID as a vanilla file. An override
+              you didn’t know about is how Game Master mods break each other.</p>
+          </article>
+          <article class="ask">
+            <h3>“What components does this prefab actually have?”</h3>
+            <p>Prefabs are partial diffs over their parent, so the file alone tells you little.
+              The inheritance chain is walked and each component’s origin reported.</p>
+          </article>
+        </div>
+
+        <p class="proof-line">
+          <img src="assets/icons/Exclamation.svg" alt="" width="20" height="20" />
+          Found in passing, by tooling built for something else: a stray empty override of the
+          vanilla Game Master mode prefab, sitting inside a working mod in a folder named
+          “trash”. Overrides bind by GUID, not by path — renaming the folder had never
+          unbound it.
+        </p>
+      </div>
+    </section>
+
+    <section id="tools" class="section tools">
+      <div class="section-inner">
+        <p class="eyebrow">The toolbox</p>
+        <h2>37 tools shipping. More designed.</h2>
+        <p class="section-lede">
+          Tools are grouped into <strong>capability tiers</strong>, and the tier decides
+          whether a tool exists at all. Under the default <code>research</code> profile the
+          write tiers are <em>absent from the tool list</em> — not merely disabled — so an
+          assistant driving the server cannot see, name, or attempt a capability it has not
+          been granted.
+        </p>
+
+        <div class="profile-bar">
+          <div class="profile-chip">
+            <span class="chip-name">research</span>
+            <span class="chip-meta">default · 20 tools · <strong>0 writers</strong></span>
+          </div>
+          <div class="profile-chip is-opt">
+            <span class="chip-name">workbench</span>
+            <span class="chip-meta">opt-in · 37 tools · 6 writers</span>
+          </div>
+        </div>
+
+        <div class="tier-stack">
+
+          <article class="tier-block">
+            <header>
+              <span class="tier-tag t0">T0</span>
+              <h3>Knowledge</h3>
+              <span class="tier-state shipped">Shipping</span>
+            </header>
+            <p class="tier-note">
+              Derived indexes built from your own installation. No Bohemia content is
+              redistributed — every index is generated locally and stamped with the game
+              build it came from.
+            </p>
+            <ul class="tool-list">
+              <li><code>symbol_lookup</code> <span>a class or enum's real declaration, inheritance chain, members, methods and usedBy</span></li>
+              <li><code>signature_check</code> <span>verify a method exists with the signature that actually shipped</span></li>
+              <li><code>prefab_resolve</code> <span>a prefab's merged component set, with each component's origin</span></li>
+              <li><code>guid_resolve</code> · <code>path_guid</code> <span>resolve a resource GUID either way, reporting how it was determined</span></li>
+              <li><code>resource_refs</code> <span>who overrides, inherits from, or references a resource</span></li>
+              <li><code>config_merge_preview</code> <span>preview a same-GUID override before it silently replaces vanilla content</span></li>
+              <li><code>addon_deps</code> <span>read <code>.gproj</code> manifests and the addon dependency graph</span></li>
+              <li><code>api_search</code> · <code>component_search</code> <span>the documentation index — superseded by <code>symbol_lookup</code>, kept as a fallback</span></li>
+              <li><code>wiki_search</code> · <code>wiki_read</code> · <code>kb_search</code> <span>indexed BI wiki and a distilled modding knowledge base</span></li>
+              <li><code>version_info</code> · <code>capabilities</code> <span>what is indexed, how stale, and what this server may currently do</span></li>
+            </ul>
+          </article>
+
+          <article class="tier-block">
+            <header>
+              <span class="tier-tag t1">T1</span>
+              <h3>Filesystem read</h3>
+              <span class="tier-state shipped">Shipping</span>
+            </header>
+            <p class="tier-note">
+              Confined to configured roots. A path that escapes one is refused with a
+              structured error, never read.
+            </p>
+            <ul class="tool-list">
+              <li><code>source_read</code> <span>one symbol, line range, or match neighbourhood — never a whole 79&nbsp;KB file</span></li>
+              <li><code>source_grep</code> <span>search <em>inside</em> the game's <code>.pak</code> archives, where ordinary tools cannot look</span></li>
+              <li><code>logs_read</code> <span>Workbench compile errors and warnings, readable with Workbench closed</span></li>
+              <li><code>reindex</code> <span>explicit rebuild against the installed game — never silent</span></li>
+              <li><code>diagnose</code> <span>config, roots, manifests, index freshness, bridge reachability</span></li>
+            </ul>
+          </article>
+
+          <article class="tier-block">
+            <header>
+              <span class="tier-tag t3">T3</span>
+              <h3>Workbench read</h3>
+              <span class="tier-state shipped">Shipping · opt-in</span>
+            </header>
+            <p class="tier-note">
+              Live reads over the Workbench NET API. Read-only is enforced by a per-handler
+              action allowlist in the client — necessary because several engine handlers mix
+              reads and writes behind one name.
+            </p>
+            <ul class="tool-list">
+              <li><code>wb_read_props</code> <span>properties as the <em>engine</em> resolves them, inherited values tagged</span></li>
+              <li><code>wb_state</code> <span>editor mode, entity and selection counts, current world</span></li>
+              <li><code>wb_entity_list</code> · <code>wb_entity_inspect</code> <span>what is in the live world, and what one entity actually is</span></li>
+              <li><code>wb_layers_read</code> · <code>wb_prefabs_read</code> <span>layer structure and live prefab ancestry</span></li>
+              <li><code>wb_resources_read</code> <span>browse the live resource database, or resolve a GUID as Workbench sees it</span></li>
+              <li><code>wb_script_read</code> · <code>wb_terrain_read</code> · <code>wb_clipboard_read</code> · <code>wb_projects_read</code></li>
+            </ul>
+          </article>
+
+          <article class="tier-block is-write">
+            <header>
+              <span class="tier-tag t2">T2 · T4</span>
+              <h3>Write &amp; mutate</h3>
+              <span class="tier-state shipped">Shipping · opt-in</span>
+            </header>
+            <p class="tier-note">
+              Every writer runs behind a twelve-point safety model: writes confined to
+              declared mod roots, <strong>dry run by default</strong> with a single-use plan
+              id, an operation journal that records how to reverse each change, explicit
+              confirmation for anything irreversible, and no publish tool at all.
+            </p>
+            <ul class="tool-list">
+              <li><code>file_write</code> <span>write into a writable mod root — returns a real diff first, changes nothing until applied</span></li>
+              <li><code>intervention_undo</code> <span>replay recorded inverses, newest first</span></li>
+              <li><code>wb_entity_create</code> · <code>wb_entity_modify</code> <span>spawn and edit live entities; undo restores the prior state</span></li>
+              <li><code>wb_entity_delete</code> <span>needs explicit confirmation, and is honest that undo will not bring it back</span></li>
+              <li><code>wb_menu_action</code> <span>allowlisted actions only — currently reload scripts and save</span></li>
+            </ul>
+          </article>
+
+          <article class="tier-block is-planned">
+            <header>
+              <span class="tier-tag tp">Next</span>
+              <h3>Designed, not yet built</h3>
+              <span class="tier-state planned">Planned</span>
+            </header>
+            <p class="tier-note">
+              Specified with acceptance criteria, not yet implemented. Listed here so the
+              gap between designed and shipping stays visible.
+            </p>
+            <ul class="tool-list">
+              <li><code>wb_component_edit</code> · <code>wb_prefab_save</code> · <code>wb_layers_edit</code> <span>the remaining live editing surface</span></li>
+              <li><code>wb_script_edit</code> <span>edit scripts, with the Reload Scripts step attached automatically — play mode does not recompile</span></li>
+              <li><code>wb_resources_register</code> · <code>wb_save</code> · <code>wb_play</code> / <code>wb_stop</code> · <code>mod_build</code></li>
+              <li><code>mod_scaffold</code> · <code>game_duplicate</code> · <code>script_scaffold</code> <span>new addons and override skeletons</span></li>
+              <li><code>framework_addon_new</code> · <code>framework_placeable_add</code> · <code>framework_action_add</code> · <code>framework_attribute_add</code> · <code>framework_panel_add</code> <span>the extension contract turned into guided, contract-validated automation</span></li>
+              <li><code>framework_mode_override_apply</code> <span>the single minimal-diff mode override, GUID re-verified against the installed build first</span></li>
+              <li><code>exp_run</code> <span>drive the validation experiments end to end and emit a structured report</span></li>
+            </ul>
+          </article>
+
+        </div>
+
+        <p class="proof-line">
+          <img src="assets/icons/shield.png" alt="" width="20" height="20" />
+          Two rules hold across every tier: results say which game build they came from, so a
+          stale answer announces itself; and nothing that reaches outward — no Workshop
+          upload, no publish — exists as a tool at all.
+        </p>
       </div>
     </section>
 
@@ -200,9 +415,11 @@
     <section id="novel" class="section novel">
       <div class="section-inner">
         <p class="eyebrow">Why it matters</p>
-        <h2>Three capabilities everyone said couldn’t be done live.</h2>
+        <h2>Three capabilities nobody has done live in Arma.</h2>
         <p class="section-lede">
-          Ranked community pain points and the hard feasibility rows share the same inventions.
+          These are the project’s <strong>targets</strong>, not shipped features. They are also
+          its highest-risk work: each is rated hard in the feasibility notes <em>and</em> sits at
+          the top of the community’s complaints — which is exactly why they are worth attempting.
         </p>
         <div class="novel-grid">
           <article>
@@ -229,8 +446,9 @@
         <p class="eyebrow">Roadmap</p>
         <h2>From research maps to open-source handoff.</h2>
         <p class="section-lede">
-          Design phases 1–6 are complete. Implementation is authorized. MCP milestones
-          lead; framework F-features follow once the Workbench bridge is live.
+          Design phases 1–6 are complete and implementation is authorized. The MCP server
+          leads; the framework’s F-features follow once the Workbench bridge is up —
+          which it currently is not.
         </p>
 
         <div class="roadmap-tabs" role="tablist" aria-label="Roadmap views">
@@ -247,7 +465,7 @@
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>4</strong> Extension contract v1.0 · architecture options</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>5</strong> reforge-mcp server spec + build plan</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>6</strong> Validation experiments EXP-1…6 designed</span></li>
-            <li class="active"><span class="badge">Now</span><span class="tl-body"><strong>7</strong> Code scaffolding — MCP M0/M2 done · next M1 GUID index</span></li>
+            <li class="active"><span class="badge">Now</span><span class="tl-body"><strong>7</strong> Code scaffolding — MCP M0–M3 done · M4 is the last offline milestone</span></li>
             <li class="gated"><span class="badge">Gated</span><span class="tl-body"><strong>8</strong> Implementation — F-1…F-15 via workbench tooling</span></li>
             <li class="gated"><span class="badge">Gated</span><span class="tl-body"><strong>9</strong> Testing — run EXP-1…6 for real</span></li>
             <li class="later"><span class="badge">Final</span><span class="tl-body"><strong>10</strong> Consolidation · docs site · community handoff</span></li>
@@ -257,19 +475,26 @@
         <div class="tab-panel" data-panel="mcp" role="tabpanel" hidden>
           <ol class="timeline mcp-timeline">
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M0</strong> Scaffold + T0 core · profile gate · version stamps</span></li>
-            <li class="next"><span class="badge">Next</span><span class="tl-body"><strong>M1</strong> GUID index · resolve / refs / merge preview</span></li>
+            <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M1</strong> GUID index · resolve / refs / merge preview</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M2</strong> Source slicer · <code>source_read</code> / <code>source_grep</code></span></li>
-            <li class="later"><span class="badge">Queued</span><span class="tl-body"><strong>M3</strong> Symbol depth · usedBy · prefab_resolve</span></li>
-            <li class="later"><span class="badge">Queued</span><span class="tl-body"><strong>M4</strong> Ops polish → research profile ships</span></li>
-            <li class="gated"><span class="badge">Bridge</span><span class="tl-body"><strong>M5</strong> Workbench-read (T3)</span></li>
-            <li class="gated"><span class="badge">Bridge</span><span class="tl-body"><strong>M6</strong> Write/mutate + 12-point safety model</span></li>
-            <li class="gated"><span class="badge">Bridge</span><span class="tl-body"><strong>M7</strong> Framework-aware composite workflows</span></li>
+            <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M3</strong> Symbol depth · <code>usedBy</code> · <code>prefab_resolve</code></span></li>
+            <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M4</strong> Ops polish → research profile ships</span></li>
+            <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M5</strong> Workbench-read (T3)</span></li>
+            <li class="active"><span class="badge">In-Progress</span><span class="tl-body"><strong>M6</strong> Write/mutate + 12-point safety model</span></li>
+            <li class="next"><span class="badge">Next</span><span class="tl-body"><strong>M7</strong> Framework-aware composite workflows</span></li>
             <li class="gated"><span class="badge">Bridge</span><span class="tl-body"><strong>M8</strong> Experiment runner · validation tooling</span></li>
           </ol>
           <p class="panel-note">
             <img src="assets/icons/Info.svg" alt="" width="16" height="16" />
-            M2 landed before M1 because the API index cannot be regenerated on current Tools
-            builds — the source index from installed <code>.pak</code> is ground truth.
+            M2 landed before M1 on purpose: the shipped API documentation dump cannot be
+            regenerated on current Tools builds, is two engine versions behind, and gets some
+            core inheritance backwards. Indexing the installed <code>.pak</code> directly is
+            ground truth — M3 then replaced that dump’s class hierarchy outright.
+          </p>
+          <p class="panel-note">
+            <img src="assets/icons/Exclamation.svg" alt="" width="16" height="16" />
+            M5 onward need a live Workbench NET-API bridge, which is currently not reachable.
+            Everything through M4 is fully offline.
           </p>
         </div>
 
@@ -368,7 +593,7 @@
       <p class="footer-brand">NEWGAMEMASTER</p>
       <p>Roadmap &amp; project explanation site for the Game Master framework and reforge-mcp.
         Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-06 · Hostable on GitHub Pages</p>
+      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M3 complete</p>
     </div>
   </footer>
 
