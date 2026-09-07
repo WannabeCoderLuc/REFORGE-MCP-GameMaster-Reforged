@@ -34,7 +34,7 @@ moves. When updating it, keep these distinctions intact:
   alongside features. Three of the current entries are bugs; that is deliberate. Entries are
   added when work lands, and each one should be traceable to `EVIDENCE_LEDGER.md`.
 
-If a number or a status on the page cannot be traced to `GameMasterMod/NEWGAMEMASTER/`
+If a number or a status on the page cannot be traced to `GameMasterMod/docs/`
 (`STATUS.md`, `EVIDENCE_LEDGER.md`, the current checkpoint), it should not be on the page.
 
 ## Structure
