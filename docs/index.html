@@ -50,8 +50,9 @@
           the research server that comes first.
         </p>
         <p class="hero-note">
-          Work in progress, in the open. The research server is being built now;
-          the framework itself has not been implemented yet.
+          Work in progress, in the open. The server reads, drives and writes; the
+          framework’s spine is attached and proven in a live world, with the
+          features themselves still ahead.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#roadmap">
@@ -113,7 +114,7 @@
             <div class="duo-head">
               <img src="assets/icons/flag.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Workshop-bound framework · designed, not yet built</p>
+                <p class="duo-label">Workshop-bound framework · spine built &amp; proven, features ahead</p>
                 <h3>NEWGAMEMASTER</h3>
               </div>
             </div>
@@ -124,10 +125,10 @@
               The extension contract is specified; implementation is Phase&nbsp;8.
             </p>
             <ul class="duo-list">
-              <li><img src="assets/icons/Tick.svg" alt="" /> Content-only + scripted extension tiers</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> Owns the fragile <code>EditorModeEdit.et</code> surface</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> Portable scenario serialization pipeline</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> F-1…F-15 build list from the extension contract</li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Content-only + scripted extension tiers</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Owns the fragile <code>EditorModeEdit.et</code> surface</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Portable scenario serialization pipeline</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">F-1…F-15 build list from the extension contract</span></li>
             </ul>
           </article>
 
@@ -146,11 +147,11 @@
               from your own install.
             </p>
             <ul class="duo-list">
-              <li><img src="assets/icons/Tick.svg" alt="" /> <code>research</code> profile — write tools are <em>absent</em>, not disabled</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> 84,015 symbols sliced from the installed <code>.pak</code></li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> 22,283 resources GUID-mapped by reference-chasing</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> 8,968 classes with real inheritance + 57,194 usage edges</li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> Per-index version stamps — current / stale / unverified</li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy"><code>research</code> profile — write tools are <em>absent</em>, not disabled</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">84,015 symbols sliced from the installed <code>.pak</code></span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">22,283 resources GUID-mapped by reference-chasing</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">8,968 classes with real inheritance + 57,194 usage edges</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Per-index version stamps — current / stale / unverified</span></li>
             </ul>
           </article>
         </div>
@@ -217,10 +218,10 @@
 
         <p class="proof-line">
           <img src="assets/icons/Exclamation.svg" alt="" width="20" height="20" />
-          Found in passing, by tooling built for something else: a stray empty override of the
+          <span class="icon-copy">Found in passing, by tooling built for something else: a stray empty override of the
           vanilla Game Master mode prefab, sitting inside a working mod in a folder named
           “trash”. Overrides bind by GUID, not by path — renaming the folder had never
-          unbound it.
+          unbound it.</span>
         </p>
       </div>
     </section>
@@ -490,9 +491,9 @@
 
         <p class="proof-line">
           <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
-          Three of the entries above are defects found by running the tools against a real
+          <span class="icon-copy">Three of the entries above are defects found by running the tools against a real
           editor rather than a test fixture. They are listed because a build log that only
-          records wins is not a build log.
+          records wins is not a build log.</span>
         </p>
       </div>
     </section>
@@ -648,9 +649,9 @@
 
         <p class="proof-line">
           <img src="assets/icons/shield.png" alt="" width="20" height="20" />
-          Two rules hold across every tier: results say which game build they came from, so a
+          <span class="icon-copy">Two rules hold across every tier: results say which game build they came from, so a
           stale answer announces itself; and nothing that reaches outward — no Workshop
-          upload, no publish — exists as a tool at all.
+          upload, no publish — exists as a tool at all.</span>
         </p>
       </div>
     </section>
@@ -728,10 +729,10 @@
 
         <p class="proof-line">
           <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
-          A comment inside a handler is not evidence either. One claimed the editor could not
+          <span class="icon-copy">A comment inside a handler is not evidence either. One claimed the editor could not
           set a selection programmatically, and its code did nothing while still reporting
           success. The engine had offered that call all along, two lines apart in the same API
-          the handler was already using — rewriting it made selection work on the first try.
+          the handler was already using — rewriting it made selection work on the first try.</span>
         </p>
       </div>
     </section>
@@ -788,12 +789,12 @@
 
         <p class="proof-line">
           <img src="assets/icons/Tick.svg" alt="" width="20" height="20" />
-          Pillar 02 is no longer a plan. The minimal override is written, it attaches the
+          <span class="icon-copy">Pillar 02 is no longer a plan. The minimal override is written, it attaches the
           framework to Game Master’s edit mode, and it has been confirmed running inside a
           live vanilla world — 0 script errors, 1 component added, 115 untouched. The component
           count came back two short of expectation and reconciled to two vanilla components
           that ship switched off, which is the sort of thing worth checking rather than
-          rounding away.
+          rounding away.</span>
         </p>
       </div>
     </section>
@@ -874,16 +875,16 @@
           </ol>
           <p class="panel-note">
             <img src="assets/icons/Info.svg" alt="" width="16" height="16" />
-            M2 landed before M1 on purpose: the shipped API documentation dump cannot be
+            <span class="icon-copy">M2 landed before M1 on purpose: the shipped API documentation dump cannot be
             regenerated on current Tools builds, is two engine versions behind, and gets some
             core inheritance backwards. Indexing the installed <code>.pak</code> directly is
-            ground truth — M3 then replaced that dump’s class hierarchy outright.
+            ground truth — M3 then replaced that dump’s class hierarchy outright.</span>
           </p>
           <p class="panel-note">
             <img src="assets/icons/Tick.svg" alt="" width="16" height="16" />
-            M5 onward need a live Workbench NET-API bridge. That bridge is now up, and the
+            <span class="icon-copy">M5 onward need a live Workbench NET-API bridge. That bridge is now up, and the
             whole write set has been exercised against a loaded world of 173,637 entities.
-            Everything through M4 remains fully offline and needs no editor at all.
+            Everything through M4 remains fully offline and needs no editor at all.</span>
           </p>
         </div>
 
@@ -930,9 +931,9 @@
         <div class="tab-panel" data-panel="wishlist" role="tabpanel" hidden>
           <p class="panel-note">
             <img src="assets/icons/Star.svg" alt="" width="16" height="16" />
-            The fourteen things Game Master is actually wanted to do. Reading the list against
+            <span class="icon-copy">The fourteen things Game Master is actually wanted to do. Reading the list against
             the code produced two findings: the last item was <em>already built</em>, and four
-            of the others are one feature wearing four hats.
+            of the others are one feature wearing four hats.</span>
           </p>
 
           <div class="flist">
@@ -988,11 +989,11 @@
 
           <p class="panel-note">
             <img src="assets/icons/Exclamation.svg" alt="" width="16" height="16" />
-            One open question gates the other thirteen. When two independent mods override the
+            <span class="icon-copy">One open question gates the other thirteen. When two independent mods override the
             same file, does the engine <em>merge</em> both or keep only the <em>last</em>? Merge,
             and features can be addons and outsiders can extend them. Last-wins, and everything
             has to funnel through a single override — a different architecture. It is half a
-            day’s experiment, and it is worth spending before anything is built on the answer.
+            day’s experiment, and it is worth spending before anything is built on the answer.</span>
           </p>
         </div>
       </div>
@@ -1022,8 +1023,8 @@
         </div>
         <p class="proof-line">
           <img src="assets/icons/Star.svg" alt="" width="20" height="20" />
-          Shipped proof: GMPW Auto Patrol — custom waypoint via same-GUID config merge,
-          live-editable and replicated. That recipe is the template.
+          <span class="icon-copy">Shipped proof: GMPW Auto Patrol — custom waypoint via same-GUID config merge,
+          live-editable and replicated. That recipe is the template.</span>
         </p>
       </div>
     </section>
@@ -1047,19 +1048,19 @@
         </p>
 
         <ul class="os-list">
-          <li><img src="assets/icons/document.png" alt="" /> README · ARCHITECTURE · EXTENSION_CONTRACT · CONTRIBUTING</li>
-          <li><img src="assets/icons/shield.png" alt="" /> COMPATIBILITY · Reforger-build tracking · migration notes</li>
-          <li><img src="assets/icons/clipboard.png" alt="" /> VALIDATION from EXP-1…6 results</li>
-          <li><img src="assets/icons/ShareLink.svg" alt="" /> MIT for the MCP server · framework licence tracked (Q-505)</li>
+          <li><img src="assets/icons/document.png" alt="" /> <span class="icon-copy">README · ARCHITECTURE · EXTENSION_CONTRACT · CONTRIBUTING</span></li>
+          <li><img src="assets/icons/shield.png" alt="" /> <span class="icon-copy">COMPATIBILITY · Reforger-build tracking · migration notes</span></li>
+          <li><img src="assets/icons/clipboard.png" alt="" /> <span class="icon-copy">VALIDATION from EXP-1…6 results</span></li>
+          <li><img src="assets/icons/ShareLink.svg" alt="" /> <span class="icon-copy">MIT for the MCP server · framework licence tracked (Q-505)</span></li>
         </ul>
 
         <p class="proof-line">
           <img src="assets/icons/Exclamation.svg" alt="" width="20" height="20" />
-          The split is drawn by redistribution, not secrecy — and the distinction that matters
+          <span class="icon-copy">The split is drawn by redistribution, not secrecy — and the distinction that matters
           is that “personal” removes the open-source obligation, not the asset licence. A
           Workshop upload is redistribution whether or not the source is public. So the boundary
           is structural: which folder the art lives in decides which build can contain it,
-          rather than someone remembering the rule at publish time.
+          rather than someone remembering the rule at publish time.</span>
         </p>
       </div>
     </section>
