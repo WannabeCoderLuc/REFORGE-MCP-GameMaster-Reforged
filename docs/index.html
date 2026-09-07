@@ -24,6 +24,7 @@
       <a href="#mission">Mission</a>
       <a href="#deliverables">Deliverables</a>
       <a href="#today">What works</a>
+      <a href="#whatsnew">What’s new</a>
       <a href="#tools">Tools</a>
       <a href="#pillars">Pillars</a>
       <a href="#roadmap">Roadmap</a>
@@ -63,7 +64,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          Phase 7 · reforge-mcp v0.1.0 · M0–M6 complete · 56 tools · 274 tests green
+          Phase 7 · reforge-mcp v0.1.0 · M0–M6 complete · 58 tools · 293 tests green
         </p>
       </div>
     </section>
@@ -133,7 +134,7 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Being built now · 56 tools working</p>
+                <p class="duo-label">Being built now · 58 tools working</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -217,10 +218,172 @@
       </div>
     </section>
 
+
+    <section id="whatsnew" class="section whatsnew">
+      <div class="section-inner">
+        <p class="eyebrow">What’s new</p>
+        <h2>Build log.</h2>
+        <p class="section-lede">
+          Dated, specific, and honest about what broke. Entries are written when the work
+          lands, not when it is planned — every claim here is traceable to the project’s
+          evidence ledger.
+        </p>
+
+        <div class="wn-filters" role="group" aria-label="Filter entries">
+          <button type="button" class="wn-chip is-active" data-wn-filter="all">All</button>
+          <button type="button" class="wn-chip" data-wn-filter="new">New</button>
+          <button type="button" class="wn-chip" data-wn-filter="fixed">Fixed</button>
+          <button type="button" class="wn-chip" data-wn-filter="changed">Changed</button>
+        </div>
+
+        <ol class="wn-list">
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-new">New</span>
+            </div>
+            <div class="wn-body">
+              <h3>Workbench runs unattended</h3>
+              <p>
+                A modal dialog blocks Workbench’s event loop — the same loop that answers the
+                automation bridge — so while one is open, nothing inside the editor can clear
+                it. The server now detects and dismisses those dialogs from outside the
+                process, and can start, close and restart the editor itself.
+              </p>
+              <p class="wn-note">
+                Dismissal is <strong>reject-only</strong>: it can decline a prompt but never
+                accept one, so it cannot confirm a destructive action on your behalf. Save,
+                overwrite and delete prompts are permanently excluded and always left for a
+                human.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-fixed">Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>Copying a world silently corrupted it</h3>
+              <p>
+                Enfusion worlds are binary. The duplicate tool read them as text, so an
+                867-byte world came back as 950 bytes of replacement characters — unopenable,
+                with no error reported. Copies are now byte-exact.
+              </p>
+              <p class="wn-note">
+                The same fix caught a second half of the bug: the sidecar file named a resource
+                class the engine does not have. Class names are now taken from a verified table,
+                and an unknown file type is refused rather than guessed.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-fixed">Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>Two tools reported success for nothing</h3>
+              <p>
+                Running the write tools against a real 173,637-entity world found one that
+                reported a tick — and recorded an undo step — for an operation the engine
+                cannot actually perform, and another that would have coerced a mistyped layer
+                name into <em>layer zero</em>, locking the entire world.
+              </p>
+              <p class="wn-note">
+                Both are now impossible: a handler answering “ok” while doing nothing is
+                treated as a failure, and layer ids are validated against the layers that exist.
+                Neither would have been caught by a test fixture.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="changed">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-changed">Changed</span>
+            </div>
+            <div class="wn-body">
+              <h3>A timeout no longer means “it didn’t happen”</h3>
+              <p>
+                A call timed out while the operation it requested had in fact completed — so a
+                real change went unrecorded, and a retry would have applied it twice. Timeouts
+                now report an explicitly <em>unknown</em> outcome and say to verify before
+                retrying.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-new">New</span>
+            </div>
+            <div class="wn-body">
+              <h3>The write surface is complete</h3>
+              <p>
+                Every writer the specification lists now exists: live entity, component,
+                clipboard, layer, prefab, resource, script and localization editing, plus
+                session control — and five scaffolders that consult the indexes before emitting
+                anything, so generated code matches the build you actually have installed.
+              </p>
+              <p class="wn-note">
+                One is deliberately absent. Packaging has no engine handler, so rather than fake
+                it through the bridge, it stays unbuilt and visibly listed as such.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-new">New</span>
+            </div>
+            <div class="wn-body">
+              <h3>The live bridge came up</h3>
+              <p>
+                The editor connection that had blocked this project since its second session
+                now answers. The cause of the last hang was ours: the client wrote its request
+                without closing the socket, and the editor reads until end-of-input —
+                indistinguishable, at the network level, from a missing handler.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-06">6 Sep 2026</time>
+              <span class="wn-tag t-new">New</span>
+            </div>
+            <div class="wn-body">
+              <h3>Indexes built from your own install</h3>
+              <p>
+                Symbols, resource GUIDs and a full class hierarchy, all derived locally and
+                stamped with the game build they came from. The shipped documentation index had
+                core editor classes inheriting from their own subclasses; the source-derived one
+                replaced it.
+              </p>
+            </div>
+          </li>
+
+        </ol>
+
+        <p class="proof-line">
+          <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
+          Three of the entries above are defects found by running the tools against a real
+          editor rather than a test fixture. They are listed because a build log that only
+          records wins is not a build log.
+        </p>
+      </div>
+    </section>
+
     <section id="tools" class="section tools">
       <div class="section-inner">
         <p class="eyebrow">The toolbox</p>
-        <h2>56 tools shipping. More designed.</h2>
+        <h2>58 tools shipping. More designed.</h2>
         <p class="section-lede">
           Tools are grouped into <strong>capability tiers</strong>, and the tier decides
           whether a tool exists at all. Under the default <code>research</code> profile the
@@ -236,7 +399,7 @@
           </div>
           <div class="profile-chip is-opt">
             <span class="chip-name">workbench</span>
-            <span class="chip-meta">opt-in · 56 tools · 23 writers</span>
+            <span class="chip-meta">opt-in · 58 tools · 25 writers</span>
           </div>
         </div>
 
@@ -333,6 +496,8 @@
               <li><code>wb_prefab_save</code> · <code>wb_resources_register</code> · <code>wb_localization_edit</code> <span>write entities out to prefabs, give new files their GUID, edit the string table</span></li>
               <li><code>wb_save</code> · <code>wb_open_resource</code> · <code>wb_play</code> / <code>wb_stop</code> <span>drive the editor session itself; opening a resource is transition-guarded because doing it mid-transition has crashed Workbench</span></li>
               <li><code>wb_menu_action</code> <span>allowlisted menu actions only — an allowlist, never a blocklist</span></li>
+              <li><code>wb_dialogs</code> <span>clear the modal dialogs that block the editor's automation bridge — reject-only, so it can decline a prompt but never accept one</span></li>
+              <li><code>wb_process</code> <span>start, close and restart the editor; handler code only registers at process start, so this is what makes an unattended add-and-verify loop possible</span></li>
             </ul>
             <p class="tier-note">
               Reversibility is decided per operation, not claimed per tool. Some undo exactly
@@ -606,7 +771,7 @@
       <p class="footer-brand">NEWGAMEMASTER</p>
       <p>Roadmap &amp; project explanation site for the Game Master framework and reforge-mcp.
         Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M6 complete</p>
+      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M6 complete · 58 tools</p>
     </div>
   </footer>
 

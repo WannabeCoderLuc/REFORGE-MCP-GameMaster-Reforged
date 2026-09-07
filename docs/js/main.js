@@ -62,4 +62,89 @@
   } else {
     revealTargets.forEach((el) => el.classList.add("is-visible"));
   }
+
+  // ── What's new: filter by entry kind ──────────────────────────────────────
+  const chips = document.querySelectorAll("[data-wn-filter]");
+  const entries = document.querySelectorAll(".wn-entry");
+
+  if (chips.length && entries.length) {
+    const list = document.querySelector(".wn-list");
+    const empty = document.createElement("p");
+    empty.className = "wn-empty";
+    empty.hidden = true;
+    empty.textContent = "No entries of that kind yet.";
+    if (list && list.parentNode) list.parentNode.insertBefore(empty, list.nextSibling);
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const want = chip.getAttribute("data-wn-filter");
+        chips.forEach((c) => c.classList.toggle("is-active", c === chip));
+
+        let shown = 0;
+        entries.forEach((entry) => {
+          const match = want === "all" || entry.getAttribute("data-wn-kind") === want;
+          entry.hidden = !match;
+          if (match) shown += 1;
+        });
+        empty.hidden = shown > 0;
+      });
+    });
+  }
+
+  // ── Scroll progress bar ───────────────────────────────────────────────────
+  const progress = document.createElement("div");
+  progress.className = "scroll-progress";
+  progress.setAttribute("aria-hidden", "true");
+  document.body.appendChild(progress);
+
+  // ── Back to top ───────────────────────────────────────────────────────────
+  const toTop = document.createElement("button");
+  toTop.type = "button";
+  toTop.className = "to-top";
+  toTop.setAttribute("aria-label", "Back to top");
+  toTop.textContent = "↑";
+  toTop.addEventListener("click", () => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  });
+  document.body.appendChild(toTop);
+
+  const onProgress = () => {
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    const ratio = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+    progress.style.transform = "scaleX(" + ratio + ")";
+    toTop.classList.toggle("is-shown", window.scrollY > 600);
+  };
+  onProgress();
+  window.addEventListener("scroll", onProgress, { passive: true });
+  window.addEventListener("resize", onProgress, { passive: true });
+
+  // ── Highlight the section currently in view ───────────────────────────────
+  const navLinks = Array.from(document.querySelectorAll(".nav-links a[href^='#']"));
+  const sections = navLinks
+    .map((a) => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+
+  if ("IntersectionObserver" in window && sections.length) {
+    const seen = new Map();
+    const spy = new IntersectionObserver(
+      (obs) => {
+        obs.forEach((o) => seen.set(o.target, o.intersectionRatio));
+        let best = null;
+        let bestRatio = 0;
+        seen.forEach((ratio, el) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            best = el;
+          }
+        });
+        navLinks.forEach((a) =>
+          a.classList.toggle("is-current", best !== null && a.getAttribute("href") === "#" + best.id)
+        );
+      },
+      { threshold: [0.1, 0.25, 0.5, 0.75] }
+    );
+    sections.forEach((sec) => spy.observe(sec));
+  }
 })();
