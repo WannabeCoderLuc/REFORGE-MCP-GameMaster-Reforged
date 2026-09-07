@@ -3,11 +3,18 @@
 Static roadmap and project-explanation site for two related, in-progress projects:
 
 - **reforge-mcp** — an open-source research + Workbench MCP server for Arma Reforger /
-  Enfusion. **Being built now.**
-- **Project Sandtable** — a planned extensible live Game Master framework ("live 3DEN" as a
-  research ambition, not a feature-parity promise). **Designed, not yet implemented.**
+  Enfusion. **The primary deliverable.** M0–M8 complete: 59 tools, 306 tests.
+- **Project Sandtable** — an extensible live Game Master framework ("live 3DEN" as a research
+  ambition, not a feature-parity promise). **Spine built and proven in a live world; the
+  thirteen features are ahead.**
 
-The server is deliberately built first, then used to build the framework.
+The server leads, and that ordering is deliberate rather than incidental: Reforger's shipped
+API documentation is two engine versions behind, cannot be regenerated on current Tools
+builds, and gets some core editor inheritance backwards — so the instrument gets built before
+the thing it measures. The framework is both the server's purpose and its hardest test case.
+
+The server is also useful entirely on its own. It knows nothing about Sandtable; it answers
+questions about Enfusion, and any Reforger modder can adopt it without the framework.
 
 The live site lives in `docs/`.
 

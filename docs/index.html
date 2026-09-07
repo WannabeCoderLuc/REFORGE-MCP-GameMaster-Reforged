@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Project Sandtable — a work-in-progress live scenario-authoring framework for Arma Reforger Game Master, built with reforge-mcp, an open-source Enfusion research server. Roadmap and project explanation." />
+  <meta name="description" content="Project Sandtable — reforge-mcp, an open-source research and Workbench-automation server for Arma Reforger's Enfusion engine, and the live Game Master scenario-authoring framework it is being built to build. Roadmap and project explanation." />
   <meta name="theme-color" content="#1a2218" />
   <title>Project Sandtable — Live Scenario Authoring for Arma Reforger</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <a class="skip-link" href="#mission">Skip to content</a>
+  <a class="skip-link" href="#intro">Skip to content</a>
 
   <header class="site-nav" data-nav>
     <a class="nav-brand" href="#top">PROJECT SANDTABLE</a>
@@ -107,8 +107,8 @@
           that ordering is deliberate rather than incidental.
         </p>
 
-        <div class="intro-grid">
-          <article class="intro-point">
+        <div class="mission-grid">
+          <article class="mission-point">
             <img src="assets/icons/Question.svg" alt="" width="36" height="36" />
             <h3>You cannot extend an engine you cannot inspect</h3>
             <p>
@@ -118,7 +118,7 @@
               a deep framework on that is guesswork with extra steps.
             </p>
           </article>
-          <article class="intro-point">
+          <article class="mission-point">
             <img src="assets/icons/search.png" alt="" width="36" height="36" />
             <h3>So the instrument gets built before the thing it measures</h3>
             <p>
@@ -128,7 +128,7 @@
               game you have and a fact about some other version of it.
             </p>
           </article>
-          <article class="intro-point">
+          <article class="mission-point">
             <img src="assets/icons/target.png" alt="" width="36" height="36" />
             <h3>The framework is the proving ground</h3>
             <p>
@@ -187,40 +187,20 @@
     <section id="deliverables" class="section deliverables">
       <div class="section-inner">
         <p class="eyebrow">Twin deliverables</p>
-        <h2>One framework. One research server.</h2>
+        <h2>One research server. One framework.</h2>
         <p class="section-lede">
-          Build the MCP server first, then use it to build the Game Master framework.
-          Both are intended for open-source community handoff.
+          The server is the primary deliverable and ships first; the framework is what it is
+          being built to build. Both are intended for open-source community handoff — and the
+          server can be adopted entirely on its own, by anyone modding Reforger, without the
+          framework.
         </p>
 
         <div class="duo">
-          <article class="duo-card duo-gm">
-            <div class="duo-head">
-              <img src="assets/icons/flag.png" alt="" width="48" height="48" />
-              <div>
-                <p class="duo-label">Workshop-bound framework · spine built &amp; proven, features ahead</p>
-                <h3>Project Sandtable</h3>
-              </div>
-            </div>
-            <p>
-              A planned live scenario-authoring layer on top of Reforger’s native editor —
-              extending transform, attributes, commands, UI panels, triggers, save/load,
-              permissions, and undo — without replacing vanilla Game Master.
-              The extension contract is specified; implementation is Phase&nbsp;8.
-            </p>
-            <ul class="duo-list">
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Content-only + scripted extension tiers</span></li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Owns the fragile <code>EditorModeEdit.et</code> surface</span></li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Portable scenario serialization pipeline</span></li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">F-1…F-15 build list from the extension contract</span></li>
-            </ul>
-          </article>
-
           <article class="duo-card duo-mcp">
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Being built now · 59 tools working</p>
+                <p class="duo-label">Primary deliverable · ships first · 59 tools working</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -236,6 +216,28 @@
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">22,283 resources GUID-mapped by reference-chasing</span></li>
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">8,968 classes with real inheritance + 57,194 usage edges</span></li>
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Per-index version stamps — current / stale / unverified</span></li>
+            </ul>
+          </article>
+
+          <article class="duo-card duo-gm">
+            <div class="duo-head">
+              <img src="assets/icons/flag.png" alt="" width="48" height="48" />
+              <div>
+                <p class="duo-label">What the server is for · spine built &amp; proven, features ahead</p>
+                <h3>Project Sandtable</h3>
+              </div>
+            </div>
+            <p>
+              A planned live scenario-authoring layer on top of Reforger’s native editor —
+              extending transform, attributes, commands, UI panels, triggers, save/load,
+              permissions, and undo — without replacing vanilla Game Master.
+              The extension contract is specified; implementation is Phase&nbsp;8.
+            </p>
+            <ul class="duo-list">
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Content-only + scripted extension tiers</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Owns the fragile <code>EditorModeEdit.et</code> surface</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Portable scenario serialization pipeline</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">F-1…F-15 build list from the extension contract</span></li>
             </ul>
           </article>
         </div>
