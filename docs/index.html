@@ -28,6 +28,7 @@
       <a href="#whatsnew">What’s new</a>
       <a href="#tools">Tools</a>
       <a href="#handlers">Handlers</a>
+      <a href="#reflection">The API</a>
       <a href="#pillars">Pillars</a>
       <a href="#roadmap">Roadmap</a>
       <a href="#opensource">Open Source</a>
@@ -69,7 +70,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          Phase 7 · reforge-mcp v0.1.0 · M0–M8 complete · 59 tools · 306 tests green
+          Phase 7 · reforge-mcp v0.1.0 · M0–M8 complete · 60 tools · 306 tests green
         </p>
       </div>
       <div class="hero-signal" aria-hidden="true">
@@ -200,7 +201,7 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Primary deliverable · ships first · 59 tools working</p>
+                <p class="duo-label">Primary deliverable · ships first · 60 tools working</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -331,6 +332,54 @@
         </div>
 
         <ol class="wn-list">
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-new"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />New</span>
+            </div>
+            <div class="wn-body">
+              <h3>The question blocking thirteen features is answered</h3>
+              <p>
+                When two mods claim the same file, does the engine keep both contributions or
+                only the last one? It keeps both. A second mod — written to know nothing about
+                the first, and deliberately loaded after it, the order that would have made the
+                first disappear — was added, and the editor came back carrying both. Eighteen
+                pieces without it, nineteen with, the difference being exactly the newcomer.
+              </p>
+              <p class="wn-note">
+                Two earlier explanations for why this wouldn’t run were mine, and both were
+                wrong: first the two mods conflicting, then a corrupted profile. The actual cause
+                came from watching someone use the editor — the session spawns wherever the
+                camera is, so pressing play with the camera nowhere useful has nothing to spawn
+                into. Neither wrong guess was ever written down as a finding, which is the only
+                reason the record is still worth reading.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-new"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />New</span>
+            </div>
+            <div class="wn-body">
+              <h3>One API instead of one handler per question</h3>
+              <p>
+                Asked why the tooling couldn’t be general rather than Game-Master-specific, the
+                answer turned out to be that it can. The engine exposes enough reflection for a
+                single routine to describe an object whose type the code has never seen — so
+                “what is attached to the editor right now” became one call instead of a new
+                handler, a restart, and a log scrape.
+              </p>
+              <p class="wn-note">
+                Building it found a bug in the handler it was modelled on: every list the bridge
+                returned had been coming back at double length, padded with blanks, for weeks.
+                Nobody noticed because callers read the count rather than the list — and that
+                same bug had quietly disarmed a safety check in the undo path.
+              </p>
+            </div>
+          </li>
 
           <li class="wn-entry" data-wn-kind="new">
             <div class="wn-meta">
@@ -640,7 +689,7 @@
     <section id="tools" class="section tools">
       <div class="section-inner">
         <p class="eyebrow">The toolbox</p>
-        <h2>59 tools shipping. More designed.</h2>
+        <h2>60 tools shipping. More designed.</h2>
         <p class="section-lede">
           Tools are grouped into <strong>capability tiers</strong>, and the tier decides
           whether a tool exists at all. Under the default <code>research</code> profile the
@@ -656,7 +705,7 @@
           </div>
           <div class="profile-chip is-opt">
             <span class="chip-name">workbench</span>
-            <span class="chip-meta">opt-in · 59 tools · 25 writers</span>
+            <span class="chip-meta">opt-in · 60 tools · 25 writers</span>
           </div>
         </div>
 
@@ -817,7 +866,7 @@
               inside the editor, and send this back”.
             </p>
             <p class="hand-note">
-              21 of them, in a dedicated addon. They are the bridge’s entire vocabulary.
+              22 of them, in a dedicated addon. They are the bridge’s entire vocabulary.
             </p>
           </article>
 
@@ -872,6 +921,82 @@
           set a selection programmatically, and its code did nothing while still reporting
           success. The engine had offered that call all along, two lines apart in the same API
           the handler was already using — rewriting it made selection work on the first try.</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="reflection" class="section handlers">
+      <div class="section-inner">
+        <p class="eyebrow">The general API</p>
+        <h2>One API, not one handler per question.</h2>
+        <p class="section-lede">
+          Every capability the bridge had arrived as its own handler, so “let me look at X”
+          meant writing and compiling something for X. Asked why this couldn’t be general
+          instead, the honest answer turned out to be: it can — and the engine had the
+          mechanism all along.
+        </p>
+
+        <div class="hand-grid">
+          <article class="hand-card">
+            <h3>What made it possible</h3>
+            <p>
+              Enforce exposes real reflection. Any object can be asked for its own type, and
+              any type can be asked to enumerate its variables — names, types, and values. So a
+              single routine can describe an object of a type the code has never heard of.
+            </p>
+            <p class="hand-note">
+              That is the difference between a hundred handlers and one.
+            </p>
+          </article>
+
+          <article class="hand-card">
+            <h3>The question it finally answers</h3>
+            <p>
+              Whether the Game Master editor is <em>actually open</em>, and what is attached to
+              it. That sounds trivial and wasn’t: the tooling could see the world editor’s mode,
+              but a session can be running with Game Master closed — a different question, and
+              the one that mattered.
+            </p>
+            <p class="hand-note">
+              The old workaround was to instrument a component so it printed its own state, then
+              read the log. Which works only where you already put the component.
+            </p>
+          </article>
+
+          <article class="hand-card is-warn">
+            <h3>Where it stops</h3>
+            <p>
+              There is no way to look up a type from a piece of text at runtime, and no way to
+              execute code. So it inspects any object it can <em>reach</em> — never an arbitrary
+              type by name. Reachability is the only part fixed at build time, and widening it is
+              a one-line change.
+            </p>
+            <p class="hand-note">
+              Stated here rather than discovered later by someone expecting otherwise.
+            </p>
+          </article>
+
+          <article class="hand-card">
+            <h3>What building it exposed</h3>
+            <p>
+              Writing a second handler of a kind is how you find out what was wrong with the
+              first. Every list the bridge returned had been arriving at double length, padded
+              with empty entries — for weeks, unnoticed, because callers read the count rather
+              than the list.
+            </p>
+            <p class="hand-note">
+              And that bug had quietly disarmed a safety check in the undo path, two layers
+              away, invisible from either end alone.
+            </p>
+          </article>
+        </div>
+
+        <p class="proof-line">
+          <img src="assets/icons/Tick.svg" alt="" width="20" height="20" />
+          Verified against a live session: the editor reported itself open, named its mode,
+          listed all nineteen components attached to it, and returned real values off the
+          manager’s fifty-three fields — answering in one call what had previously taken a
+          restart, a manual step, and a log scrape.
         </p>
       </div>
     </section>
@@ -1135,13 +1260,20 @@
           </p>
           <p class="panel-note">
             <img src="assets/icons/Question.svg" alt="" width="16" height="16" />
-            <span class="icon-copy"><strong>Still unanswered.</strong> The probe — a second,
-            deliberately independent override carrying its own marker component — is built and
-            compiles clean. The run that would have settled it ended with the editor falling
-            back to a menu and neither marker appearing, which fits “the two overrides conflict”
-            exactly as well as it fits an unrelated fault. The control run that would have told
-            those apart didn’t finish. So it stays open, rather than becoming a finding that
-            happens to be plausible.</span>
+            <span class="icon-copy"><strong>Answered: they union.</strong> A second, deliberately
+            independent override — one that knows nothing about the framework — was loaded
+            <em>after</em> it, the ordering under which last-wins would have dropped the
+            framework’s own component. The mode came back carrying <strong>both</strong>: 18
+            components without it, 19 with, the difference being exactly the newcomer. Nothing
+            replaced.</span>
+          </p>
+          <p class="panel-note">
+            <img src="assets/icons/Tick.svg" alt="" width="16" height="16" />
+            <span class="icon-copy">Asserted three ways that don’t depend on each other: each
+            addon censused the editor separately and both reported seeing the other, and the
+            probe published its own one-line verdict so the answer never rested on someone
+            counting names correctly. <strong>Features can be addons. Outsiders can extend
+            them.</strong> Thirteen of the fourteen are unblocked.</span>
           </p>
         </div>
       </div>
@@ -1219,7 +1351,7 @@
       <p class="footer-brand">PROJECT SANDTABLE</p>
       <p>Roadmap &amp; project explanation site for the Game Master framework and reforge-mcp.
         Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M8 complete · 59 tools · 21 handlers · four-project split</p>
+      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M8 complete · 60 tools · 22 handlers · four-project split</p>
     </div>
   </footer>
 
