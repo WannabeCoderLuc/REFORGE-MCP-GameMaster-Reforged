@@ -1334,6 +1334,9 @@ code {
 }
 
 .wn-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1359,6 +1362,28 @@ code {
   color: var(--rust);
   border-color: rgba(196, 92, 42, 0.4);
   background: rgba(196, 92, 42, 0.12);
+}
+
+/* Icons come from the site's provided set (white SVG / white PNG), so they are
+   tinted to each tag's colour rather than shipped pre-coloured. */
+.wn-tag img {
+  flex: none;
+  filter: brightness(0) invert(1);
+  opacity: 0.75;
+}
+
+.to-top img {
+  width: 16px;
+  height: 16px;
+  transform: rotate(-90deg);
+  filter: brightness(0) invert(1);
+  opacity: 0.7;
+  transition: opacity 0.2s var(--ease);
+}
+
+.to-top:hover img,
+.to-top:focus-visible img {
+  opacity: 1;
 }
 
 /* Marker on the spine, aligned to the entry's first line. */

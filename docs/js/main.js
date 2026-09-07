@@ -102,7 +102,14 @@
   toTop.type = "button";
   toTop.className = "to-top";
   toTop.setAttribute("aria-label", "Back to top");
-  toTop.textContent = "↑";
+  // The provided icon set, rotated, rather than a typographic arrow — the rest
+  // of the page draws every glyph from assets/icons.
+  const arrow = document.createElement("img");
+  arrow.src = "assets/icons/SolidArrow-Right.svg";
+  arrow.alt = "";
+  arrow.width = 16;
+  arrow.height = 16;
+  toTop.appendChild(arrow);
   toTop.addEventListener("click", () => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
