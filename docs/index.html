@@ -21,6 +21,7 @@
       <span></span><span></span>
     </button>
     <nav id="nav-menu" class="nav-links" data-nav-menu>
+      <a href="#intro">Introduction</a>
       <a href="#mission">Mission</a>
       <a href="#deliverables">Deliverables</a>
       <a href="#today">What works</a>
@@ -43,11 +44,13 @@
       </div>
       <div class="hero-inner">
         <p class="brand-mark">PROJECT SANDTABLE</p>
-        <h1>Live scenario authoring inside a running Reforger session.</h1>
+        <h1>The server comes first.</h1>
         <p class="hero-lede">
-          An extensible Game Master framework aimed at Arma&nbsp;3 3DEN depth —
-          built for multiplayer, and built with <strong>reforge-mcp</strong>,
-          the research server that comes first.
+          <strong>reforge-mcp</strong> is this project’s primary deliverable: a research and
+          Workbench-automation server for Enfusion, built entirely from your own installation.
+          <strong>Project Sandtable</strong> — live scenario authoring inside a running
+          Reforger session — is what it is being built to build, and the hardest thing it has
+          to prove itself against.
         </p>
         <p class="hero-note">
           Work in progress, in the open. The server reads, drives and writes; the
@@ -82,6 +85,67 @@
         <div class="signal-node node-tools"><img src="assets/icons/settings.png" alt="" width="28" height="28" /><span>REFORGE MCP</span></div>
         <div class="signal-node node-editor"><img src="assets/icons/controller.png" alt="" width="28" height="28" /><span>GAME MASTER</span></div>
         <span class="signal-caption">SOURCE → TOOLS → LIVE AUTHORING</span>
+      </div>
+    </section>
+
+    <section id="intro" class="section intro">
+      <div class="section-inner">
+        <p class="eyebrow">Introduction</p>
+        <h2>What this is, and why the tooling leads.</h2>
+
+        <p class="section-lede">
+          Two things are being built here. <strong>reforge-mcp</strong> is a server that lets
+          an AI assistant — or a person — ask precise questions about Arma Reforger’s engine
+          and, optionally, drive the Workbench editor directly. <strong>Project Sandtable</strong>
+          is a framework to make Game Master a real authoring environment: an editor you can
+          use to build a scenario <em>while the session is running</em>, with the depth Arma 3’s
+          3DEN has offline.
+        </p>
+
+        <p class="section-lede">
+          The framework is the ambition. The server is the deliverable that comes first, and
+          that ordering is deliberate rather than incidental.
+        </p>
+
+        <div class="intro-grid">
+          <article class="intro-point">
+            <img src="assets/icons/Question.svg" alt="" width="36" height="36" />
+            <h3>You cannot extend an engine you cannot inspect</h3>
+            <p>
+              Reforger’s shipped API documentation is two engine versions behind, cannot be
+              regenerated on current Tools builds, and gets some core editor inheritance
+              backwards — one class is documented as inheriting from its own subclass. Building
+              a deep framework on that is guesswork with extra steps.
+            </p>
+          </article>
+          <article class="intro-point">
+            <img src="assets/icons/search.png" alt="" width="36" height="36" />
+            <h3>So the instrument gets built before the thing it measures</h3>
+            <p>
+              Every index the server answers from is generated from <em>your</em> installation
+              and stamped with the build it came from, so a reply can say “current”, “stale” or
+              “unverified” instead of guessing. That is the difference between a fact about the
+              game you have and a fact about some other version of it.
+            </p>
+          </article>
+          <article class="intro-point">
+            <img src="assets/icons/target.png" alt="" width="36" height="36" />
+            <h3>The framework is the proving ground</h3>
+            <p>
+              Sandtable is not a customer of the server so much as its hardest test. Nearly
+              every capability the server has — GUID resolution, override detection, live
+              editor mutation with undo — exists because building the framework demanded it and
+              the naive version turned out to be wrong.
+            </p>
+          </article>
+        </div>
+
+        <p class="proof-line">
+          <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
+          Which is also why the server is useful on its own. It knows nothing about Sandtable;
+          it answers questions about Enfusion. Any Reforger modder facing the same stale-docs
+          problem can use it without adopting the framework, or caring that it exists.
+        </p>
       </div>
     </section>
 
