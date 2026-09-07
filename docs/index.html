@@ -71,7 +71,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          Phase 7 · reforge-mcp v0.1.0 · M0–M8 complete · 62 tools · 306 tests green
+          Phase 7 · reforge-mcp v0.1.0 · M0–M8 complete · 68 tools · 317 tests green
         </p>
       </div>
       <div class="hero-signal" aria-hidden="true">
@@ -202,7 +202,7 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Primary deliverable · ships first · 62 tools working</p>
+                <p class="duo-label">Primary deliverable · ships first · 68 tools working</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -691,7 +691,7 @@
     <section id="tools" class="section tools">
       <div class="section-inner">
         <p class="eyebrow">The toolbox</p>
-        <h2>62 tools shipping. More designed.</h2>
+        <h2>68 tools shipping. More designed.</h2>
         <p class="section-lede">
           Tools are grouped into <strong>capability tiers</strong>, and the tier decides
           whether a tool exists at all. Under the default <code>research</code> profile the
@@ -707,7 +707,7 @@
           </div>
           <div class="profile-chip is-opt">
             <span class="chip-name">workbench</span>
-            <span class="chip-meta">opt-in · 62 tools · 26 writers</span>
+            <span class="chip-meta">opt-in · 68 tools · 32 writers</span>
           </div>
         </div>
 
@@ -822,17 +822,37 @@
           <article class="tier-block is-planned">
             <header>
               <span class="tier-tag tp">Next</span>
-              <h3>Designed, not yet built</h3>
-              <span class="tier-state planned">Planned</span>
+              <h3>Framework workflows</h3>
+              <span class="tier-state shipped">Shipping · opt-in</span>
             </header>
             <p class="tier-note">
-              Specified with acceptance criteria, not yet implemented. Listed here so the
-              gap between designed and shipping stays visible.
+              The extension contract turned into guided automation. These are not file writers:
+              each validates the contract <em>before</em> writing and refuses with a pointer to
+              the clause, because every rule below guards a mistake that compiles cleanly and
+              then misbehaves somewhere else.
             </p>
             <ul class="tool-list">
-              <li><code>mod_build</code> <span>package an addon — deferred deliberately: there is no engine handler for it, so it needs a separate Workbench CLI invocation rather than a request to the running editor</span></li>
-              <li><code>framework_addon_new</code> · <code>framework_placeable_add</code> · <code>framework_action_add</code> · <code>framework_attribute_add</code> · <code>framework_panel_add</code> <span>the extension contract turned into guided, contract-validated automation</span></li>
-              <li><code>framework_mode_override_apply</code> <span>the single minimal-diff mode override, GUID re-verified against the installed build first</span></li>
+              <li><code>framework_addon_new</code> <span>a scripted extension addon: manifest class the registrar can find, plus the folder layout the contract expects</span></li>
+              <li><code>framework_action_add</code> <span>a command action, its registry merge, and the keybinding entry that makes it rebindable — <strong>an un-namespaced id is refused</strong>, because registry ids are shared and a bare word collides with whoever else picked it</span></li>
+              <li><code>framework_attribute_add</code> <span>an Edit-Properties attribute plus the category tab it needs — an attribute in a tab that does not exist simply never appears</span></li>
+              <li><code>framework_panel_add</code> <span>the component + layout pair, with an <strong>explicit Z band</strong>. Not optional: vanilla reserves the top of the range and widget order is otherwise decided by insertion, so a panel without one is positioned by accident</span></li>
+              <li><code>framework_placeable_add</code> <span>the editable wrapper that makes a prefab placeable, with a fresh GUID — a wrapper reusing the source's GUID would override it instead</span></li>
+              <li><code>framework_mode_override_apply</code> <span>the single minimal-diff mode override, <strong>GUID re-verified against your installed build first</strong> — an override pinned to a GUID that moved loads, compiles, and silently overrides nothing</span></li>
+            </ul>
+          </article>
+
+          <article class="tier-block">
+            <header>
+              <span class="tier-tag t0">Next</span>
+              <h3>Deliberately absent</h3>
+              <span class="tier-state planned">Not built</span>
+            </header>
+            <p class="tier-note">
+              One tool the specification lists and this server does not have. Listed rather than
+              quietly dropped, so the gap stays visible.
+            </p>
+            <ul class="tool-list">
+              <li><code>mod_build</code> <span>package an addon. There is no engine handler for it: packaging needs a separate command-line invocation, which is a different kind of thing from sending a request to a running editor — it spawns a long-lived process, writes outside every configured root, and has no way to be undone. Faking it through the bridge would be worse than not having it</span></li>
             </ul>
           </article>
 
@@ -1139,7 +1159,7 @@
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M5</strong> Workbench-read (T3)</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M6</strong> Write/mutate + 12-point safety model</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M8</strong> Experiment runner · validation tooling</span></li>
-            <li class="active"><span class="badge">Next</span><span class="tl-body"><strong>M7</strong> Framework-aware composite workflows — the last milestone outstanding</span></li>
+            <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M7</strong> Framework-aware composite workflows — <strong>M0–M8 complete</strong></span></li>
           </ol>
           <p class="panel-note">
             <img src="assets/icons/Info.svg" alt="" width="16" height="16" />
@@ -1510,7 +1530,7 @@
       <p class="footer-brand">PROJECT SANDTABLE</p>
       <p>Roadmap &amp; project explanation site for the Game Master framework and reforge-mcp.
         Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M8 complete · 62 tools · 22 handlers · four-project split</p>
+      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M8 complete · 68 tools · 22 handlers · four-project split</p>
     </div>
   </footer>
 
