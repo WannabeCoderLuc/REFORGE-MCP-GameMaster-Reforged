@@ -31,6 +31,7 @@
       <a href="#reflection">The API</a>
       <a href="#pillars">Pillars</a>
       <a href="#roadmap">Roadmap</a>
+      <a href="#getstarted">Get started</a>
       <a href="#opensource">Open Source</a>
     </nav>
   </header>
@@ -232,7 +233,8 @@
               A planned live scenario-authoring layer on top of Reforger’s native editor —
               extending transform, attributes, commands, UI panels, triggers, save/load,
               permissions, and undo — without replacing vanilla Game Master.
-              The extension contract is specified; implementation is Phase&nbsp;8.
+              The extension contract is specified, the spine is built and proven in a live
+              world, and the features are the work ahead.
             </p>
             <ul class="duo-list">
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Content-only + scripted extension tiers</span></li>
@@ -773,6 +775,7 @@
               <li><code>wb_layers_read</code> · <code>wb_prefabs_read</code> <span>layer structure and live prefab ancestry</span></li>
               <li><code>wb_resources_read</code> <span>browse the live resource database, or resolve a GUID as Workbench sees it</span></li>
               <li><code>wb_component_read</code> · <code>wb_localization_read</code> <span>a live entity's components, and the string table</span></li>
+              <li><code>wb_inspect</code> <span>generic runtime reflection — whether the in-game editor is open and what is on its mode, any reachable object's variables and values, and every AI group's queued orders with the distance to each</span></li>
               <li><code>wb_script_read</code> · <code>wb_terrain_read</code> · <code>wb_clipboard_read</code> · <code>wb_projects_read</code></li>
             </ul>
           </article>
@@ -804,6 +807,7 @@
               <li><code>wb_menu_action</code> <span>allowlisted menu actions only — an allowlist, never a blocklist</span></li>
               <li><code>wb_dialogs</code> <span>clear the modal dialogs that block the editor's automation bridge — reject-only, so it can decline a prompt but never accept one</span></li>
               <li><code>wb_process</code> <span>start, close and restart the editor; handler code only registers at process start, so this is what makes an unattended add-and-verify loop possible</span></li>
+              <li><code>exp_run</code> <span>drive a validation experiment and emit a structured report — a check it cannot observe is reported <em>unobserved</em>, never passed</span></li>
             </ul>
             <p class="tier-note">
               Reversibility is decided per operation, not claimed per tool. Some undo exactly
@@ -829,7 +833,6 @@
               <li><code>mod_build</code> <span>package an addon — deferred deliberately: there is no engine handler for it, so it needs a separate Workbench CLI invocation rather than a request to the running editor</span></li>
               <li><code>framework_addon_new</code> · <code>framework_placeable_add</code> · <code>framework_action_add</code> · <code>framework_attribute_add</code> · <code>framework_panel_add</code> <span>the extension contract turned into guided, contract-validated automation</span></li>
               <li><code>framework_mode_override_apply</code> <span>the single minimal-diff mode override, GUID re-verified against the installed build first</span></li>
-              <li><code>exp_run</code> <span>drive the validation experiments end to end and emit a structured report</span></li>
             </ul>
           </article>
 
@@ -903,8 +906,9 @@
           <article class="hand-card is-warn">
             <h3>What they cost</h3>
             <p>
-              A handler only becomes live when the editor <em>restarts</em> — reloading scripts
-              updates existing code but never registers a new class. And an edit is
+              A handler only becomes live when the editor <em>restarts</em>. Reloading scripts
+              does not update handler code at all — not new classes, and not edits to existing
+              ones either, which was assumed to work until it was tested. And an edit is
               all-or-nothing: one bad symbol fails the whole script module and takes
               <strong>every</strong> handler offline at once, not just the edited one.
             </p>
@@ -1099,8 +1103,8 @@
         <p class="section-lede">
           Design phases 1–6 are complete and implementation is authorized. The bridge is up,
           the server writes, and the framework’s spine is attached and proven in a live
-          world. What remains is thirteen features — and one question that decides how they
-          are built.
+          world. The question that decided how the remaining thirteen features get built has
+          been answered — they can be addons — so what remains is building them.
         </p>
 
         <div class="roadmap-tabs" role="tablist" aria-label="Roadmap views">
@@ -1134,8 +1138,8 @@
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M4</strong> Ops polish → research profile ships</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M5</strong> Workbench-read (T3)</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M6</strong> Write/mutate + 12-point safety model</span></li>
-            <li class="active"><span class="badge">Next</span><span class="tl-body"><strong>M7</strong> Framework-aware composite workflows</span></li>
-            <li class="next"><span class="badge">Then</span><span class="tl-body"><strong>M8</strong> Experiment runner · validation tooling</span></li>
+            <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>M8</strong> Experiment runner · validation tooling</span></li>
+            <li class="active"><span class="badge">Next</span><span class="tl-body"><strong>M7</strong> Framework-aware composite workflows — the last milestone outstanding</span></li>
           </ol>
           <p class="panel-note">
             <img src="assets/icons/Info.svg" alt="" width="16" height="16" />
@@ -1309,6 +1313,139 @@
       </div>
     </section>
 
+    <section id="getstarted" class="section handlers">
+      <div class="section-inner">
+        <p class="eyebrow">Using it</p>
+        <h2>Install, point it at your game, ask it things.</h2>
+        <p class="section-lede">
+          The server is MIT-licensed and runs locally. It redistributes no game content —
+          every index it answers from is generated from the copy of Arma Reforger you already
+          own, and stamped with the build it came from.
+        </p>
+
+        <div class="hand-grid">
+          <article class="hand-card">
+            <h3>1 · Install and index</h3>
+            <p>
+              Clone, <code>npm install</code>, <code>npm run build</code>. Copy the example
+              config and set four paths: your game, your Tools install, your Steam
+              <code>steamapps</code>, and your Workbench addons directory.
+            </p>
+            <p class="hand-note">
+              Then build the indexes. They take seconds, and they come from your installation
+              rather than from anyone else's.
+            </p>
+          </article>
+
+          <article class="hand-card">
+            <h3>2 · Start in read-only</h3>
+            <p>
+              It ships in the <code>research</code> profile: twenty tools, no writers, no
+              editor required. Everything about the engine — symbols, GUIDs, overrides, prefab
+              resolution — is answerable in this mode with Arma Reforger closed.
+            </p>
+            <p class="hand-note">
+              Most people never need more than this.
+            </p>
+          </article>
+
+          <article class="hand-card">
+            <h3>3 · Add the bridge, if you want the editor</h3>
+            <p>
+              Editor features need a small handler addon installed into Workbench and a
+              restart, because handler classes only register at process start. Without it the
+              editor tools cannot connect and everything else carries on working.
+            </p>
+            <p class="hand-note">
+              The server never installs it for you — modifying your project as a side effect
+              of connecting is a hazard, not a convenience.
+            </p>
+          </article>
+
+          <article class="hand-card is-warn">
+            <h3>4 · Only then, enable writes</h3>
+            <p>
+              The <code>workbench</code> profile lets an assistant edit files in the mod roots
+              you declare and change a live editor session. That is a real decision, not a
+              formality.
+            </p>
+            <p class="hand-note">
+              Put your mod in version control first. The safeguards below are good and have
+              been exercised — they are not a guarantee.
+            </p>
+          </article>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Precautions worth reading before you enable writes</h3>
+        <p class="section-lede">
+          Everything here has actually happened during development. None of it is hypothetical.
+        </p>
+
+        <div class="hand-grid">
+          <article class="hand-card is-warn">
+            <h3>Some things cannot be undone</h3>
+            <p>
+              Deleting an entity, saving a prefab, registering a resource and saving the world
+              record <em>no inverse</em> and say so. Saving in particular commits every unsaved
+              change at once — including ones you made by hand that the server knows nothing
+              about.
+            </p>
+            <p class="hand-note">
+              A fabricated undo that looks like a restore is worse than none, because it is
+              believed.
+            </p>
+          </article>
+
+          <article class="hand-card is-warn">
+            <h3>Undo does not survive a restart</h3>
+            <p>
+              The journal of how to reverse each change lives in the server process. Restart it
+              and the changes remain on disk but can no longer be reversed. Undo soon, or not
+              at all.
+            </p>
+            <p class="hand-note">
+              Deliberate: persisting it would imply a guarantee across restarts that nothing
+              has verified.
+            </p>
+          </article>
+
+          <article class="hand-card is-warn">
+            <h3>Driving a live editor has crashed it</h3>
+            <p>
+              Opening a resource mid mode-transition crashed the editor natively. Pasting a
+              duplicate of a one-per-world entity made the engine assert. Repeated forced
+              closes hung it twice.
+            </p>
+            <p class="hand-note">
+              Do not run this against a session holding work you have not saved.
+            </p>
+          </article>
+
+          <article class="hand-card is-warn">
+            <h3>A green report is not a safe outcome</h3>
+            <p>
+              An automated run once placed a camera over open water at altitude, spawned a
+              character into the sea, and reported success at every step — because nothing was
+              checking <em>where</em> the camera had ended up.
+            </p>
+            <p class="hand-note">
+              Checks confirm the things they check. That is all they confirm.
+            </p>
+          </article>
+        </div>
+
+        <p class="proof-line">
+          <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
+          Two guarantees hold whatever you enable. There is <strong>no publish tool</strong> —
+          no Workshop upload, no release step, nothing outward-facing, and a test that fails if
+          one is ever added. And the dialog dismissal used for unattended runs is
+          <strong>reject-only by construction</strong>: it can decline a prompt but is
+          structurally incapable of accepting one, so it cannot confirm a destructive action on
+          your behalf.
+        </p>
+      </div>
+    </section>
+
     <section id="opensource" class="section opensource">
       <div class="section-inner">
         <p class="eyebrow">Standing goal</p>
@@ -1328,10 +1465,14 @@
         </p>
 
         <ul class="os-list">
-          <li><img src="assets/icons/document.png" alt="" /> <span class="icon-copy">README · ARCHITECTURE · EXTENSION_CONTRACT · CONTRIBUTING</span></li>
-          <li><img src="assets/icons/shield.png" alt="" /> <span class="icon-copy">COMPATIBILITY · Reforger-build tracking · migration notes</span></li>
-          <li><img src="assets/icons/clipboard.png" alt="" /> <span class="icon-copy">VALIDATION from EXP-1…6 results</span></li>
-          <li><img src="assets/icons/ShareLink.svg" alt="" /> <span class="icon-copy">MIT for the MCP server · framework licence tracked (Q-505)</span></li>
+          <li><img src="assets/icons/document.png" alt="" /> <span class="icon-copy"><strong>README</strong> — what it is, install, the paths to configure, quickstart</span></li>
+          <li><img src="assets/icons/settings.png" alt="" /> <span class="icon-copy"><strong>API</strong> — every tool by tier, with what each actually guarantees</span></li>
+          <li><img src="assets/icons/keyboard.png" alt="" /> <span class="icon-copy"><strong>HANDLERS</strong> — the editor addon: installing, extending, and the traps that cost an afternoon</span></li>
+          <li><img src="assets/icons/Exclamation.svg" alt="" /> <span class="icon-copy"><strong>WARNINGS</strong> — precautions, every one of them something that actually happened</span></li>
+          <li><img src="assets/icons/Star.svg" alt="" /> <span class="icon-copy"><strong>HIGHLIGHTS</strong> — the nine capabilities that define how it works</span></li>
+          <li><img src="assets/icons/shield.png" alt="" /> <span class="icon-copy">COMPATIBILITY · build tracking · migration notes</span></li>
+          <li><img src="assets/icons/clipboard.png" alt="" /> <span class="icon-copy">VALIDATION from the experiment results</span></li>
+          <li><img src="assets/icons/ShareLink.svg" alt="" /> <span class="icon-copy">MIT for the server · framework licence tracked separately</span></li>
         </ul>
 
         <p class="proof-line">
