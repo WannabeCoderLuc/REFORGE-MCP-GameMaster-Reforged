@@ -29,6 +29,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -439,7 +440,6 @@ code {
 
 .duo-card:hover {
   border-color: var(--line-strong);
-  transform: translateY(-3px);
 }
 
 .duo-mcp {
@@ -744,6 +744,17 @@ code {
   opacity: 0.7;
 }
 
+/* Keep emphasis and code inline within one flex item, beside the icon. */
+.icon-copy {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.panel-note + .flist {
+  margin-top: 1.75rem;
+}
+
 .flist {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -883,7 +894,7 @@ code {
 
 .ask-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -1131,12 +1142,41 @@ code {
 .reveal {
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease),
+    translate 0.25s var(--ease), border-color 0.25s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms), var(--reveal-delay, 0ms), 0ms, 0ms;
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+}
+
+/* Brief movement on view changes; no continuous animation in reading panels. */
+.tab-panel.is-active {
+  animation: panel-in 0.32s var(--ease) both;
+}
+
+@keyframes panel-in {
+  from { opacity: 0.5; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(.stat, .ask, .hand-card, .tier, .duo-card) {
+    transition: translate 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+
+  .stat:hover, .ask:hover, .hand-card:hover, .tier:hover, .duo-card:hover {
+    translate: 0 -3px;
+    border-color: var(--olive-bright);
+  }
+
+  .btn img {
+    transition: translate 0.2s var(--ease);
+  }
+
+  .btn:hover img { translate: 3px 0; }
 }
 
 /* Animations */
@@ -1192,7 +1232,7 @@ code {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1120px) {
   .nav-toggle {
     display: flex;
   }
@@ -1218,6 +1258,9 @@ code {
     padding: 0.75rem 0;
     border-bottom: 1px solid var(--line);
   }
+}
+
+@media (max-width: 720px) {
 
   .timeline li {
     grid-template-columns: 4.5rem 1fr;
@@ -1236,9 +1279,9 @@ code {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    transition: none !important;
+    translate: none !important;
   }
   .reveal {
     opacity: 1;
@@ -1542,7 +1585,7 @@ code {
 
 .hand-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
   gap: 1.25rem;
   margin: 2.5rem 0 2rem;
 }
@@ -1596,4 +1639,74 @@ code {
 
 .hand-card.is-warn .hand-note {
   color: var(--signal-dim) !important;
+}
+
+/* Animated source → tooling → editor schematic. */
+.hero-signal {
+  position: absolute;
+  width: min(34vw, 450px);
+  aspect-ratio: 1;
+  right: 5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  isolation: isolate;
+}
+.signal-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(143,184,106,.2); }
+.ring-outer { inset: 0; border-style: dashed; animation: orbit 90s linear infinite; }
+.ring-inner { inset: 18%; border-color: rgba(224,169,58,.18); }
+.signal-sweep {
+  position: absolute; inset: 5%; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg 280deg, rgba(143,184,106,.11) 350deg, transparent 360deg);
+  animation: orbit 14s linear infinite;
+}
+.signal-routes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.route-track { stroke: rgba(143,184,106,.25); stroke-width: 1; }
+.route-packet { stroke: var(--signal); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 22 740; animation: packet-travel 9s linear infinite; }
+.signal-core {
+  position: absolute; inset: 38%; display: grid; place-items: center;
+  border: 1px solid rgba(143,184,106,.3); border-radius: 50%;
+  background: rgba(20,25,16,.9); box-shadow: 0 0 45px rgba(107,143,78,.15);
+}
+.signal-core img { opacity: .8; animation: core-breathe 5s ease-in-out infinite; }
+.signal-node {
+  position: absolute; width: 7.5rem; display: flex; flex-direction: column; align-items: center; gap: .7rem;
+  transform: translate(-50%,-50%); color: var(--ink-muted);
+  font-size: .72rem; letter-spacing: .1em; text-align: center;
+}
+.signal-node img { box-sizing: content-box; padding: .85rem; background: var(--bg-elev); border: 1px solid var(--line-strong); border-radius: 10px; }
+.node-source { left: 50%; top: 17.5%; }
+.node-tools { left: 82.5%; top: 71.25%; }
+.node-editor { left: 17.5%; top: 71.25%; }
+.signal-caption { position: absolute; top: 106%; width: 100%; text-align: center; color: var(--ink-faint); font-size: .7rem; letter-spacing: .12em; }
+.motion-paused *, .motion-paused { animation-play-state: paused !important; }
+@keyframes orbit { to { transform: rotate(360deg); } }
+@keyframes packet-travel { to { stroke-dashoffset: -762; } }
+@keyframes core-breathe { 50% { opacity: 1; transform: scale(1.13); } }
+
+/* Pointer light follows the cursor without moving the reading surface. */
+.motion-card { position: relative; isolation: isolate; }
+.motion-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(260px circle at var(--pointer-x,50%) var(--pointer-y,50%), rgba(143,184,106,.12), transparent 75%);
+  opacity: 0; transition: opacity .35s ease;
+}
+.motion-card.pointer-active::after { opacity: 1; }
+.mission-point > img, .duo-head > img, .pillar > img, .tier > img {
+  transition: filter .3s ease, scale .3s var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mission-point:hover > img, .duo-card:hover .duo-head > img, .pillar:hover > img, .tier:hover > img { scale: 1.12; }
+}
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -.4rem; height: 2px;
+  background: var(--olive-bright); transform: scaleX(0); transform-origin: left;
+  transition: transform .25s var(--ease);
+}
+.nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links a.is-current::after { transform: scaleX(1); }
+@media (max-width: 1180px) { .hero-signal { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .signal-core img { transform: none; }
+  .motion-card::after { display: none; }
+  .mission-point > img, .duo-head > img, .pillar > img, .tier > img { scale: none !important; }
 }
