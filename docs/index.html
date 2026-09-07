@@ -63,7 +63,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          Phase 7 · reforge-mcp v0.1.0 · M0–M6 complete · 37 tools · 246 tests green
+          Phase 7 · reforge-mcp v0.1.0 · M0–M6 complete · 56 tools · 274 tests green
         </p>
       </div>
     </section>
@@ -133,7 +133,7 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Being built now · 37 tools working</p>
+                <p class="duo-label">Being built now · 56 tools working</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -220,7 +220,7 @@
     <section id="tools" class="section tools">
       <div class="section-inner">
         <p class="eyebrow">The toolbox</p>
-        <h2>37 tools shipping. More designed.</h2>
+        <h2>56 tools shipping. More designed.</h2>
         <p class="section-lede">
           Tools are grouped into <strong>capability tiers</strong>, and the tier decides
           whether a tool exists at all. Under the default <code>research</code> profile the
@@ -236,7 +236,7 @@
           </div>
           <div class="profile-chip is-opt">
             <span class="chip-name">workbench</span>
-            <span class="chip-meta">opt-in · 37 tools · 6 writers</span>
+            <span class="chip-meta">opt-in · 56 tools · 23 writers</span>
           </div>
         </div>
 
@@ -303,6 +303,7 @@
               <li><code>wb_entity_list</code> · <code>wb_entity_inspect</code> <span>what is in the live world, and what one entity actually is</span></li>
               <li><code>wb_layers_read</code> · <code>wb_prefabs_read</code> <span>layer structure and live prefab ancestry</span></li>
               <li><code>wb_resources_read</code> <span>browse the live resource database, or resolve a GUID as Workbench sees it</span></li>
+              <li><code>wb_component_read</code> · <code>wb_localization_read</code> <span>a live entity's components, and the string table</span></li>
               <li><code>wb_script_read</code> · <code>wb_terrain_read</code> · <code>wb_clipboard_read</code> · <code>wb_projects_read</code></li>
             </ul>
           </article>
@@ -322,10 +323,25 @@
             <ul class="tool-list">
               <li><code>file_write</code> <span>write into a writable mod root — returns a real diff first, changes nothing until applied</span></li>
               <li><code>intervention_undo</code> <span>replay recorded inverses, newest first</span></li>
-              <li><code>wb_entity_create</code> · <code>wb_entity_modify</code> <span>spawn and edit live entities; undo restores the prior state</span></li>
+              <li><code>mod_scaffold</code> · <code>game_duplicate</code> <span>a new addon skeleton, or a vanilla resource copied with a <em>fresh</em> GUID — a copy that keeps the original GUID is a merge, not a duplicate</span></li>
+              <li><code>script_scaffold</code> <span>subclass a base class using the overridable signatures that shipped in <em>your</em> build, read from the symbol index</span></li>
+              <li><code>config_scaffold</code> · <code>layout_scaffold</code> <span>new <code>.conf</code> / <code>.layout</code> resources with minted, collision-checked GUIDs and their <code>.meta</code></span></li>
+              <li><code>wb_entity_create</code> · <code>wb_entity_modify</code> · <code>wb_entity_select</code> <span>spawn, edit and select live entities; undo restores the prior state</span></li>
               <li><code>wb_entity_delete</code> <span>needs explicit confirmation, and is honest that undo will not bring it back</span></li>
-              <li><code>wb_menu_action</code> <span>allowlisted actions only — currently reload scripts and save</span></li>
+              <li><code>wb_component_edit</code> · <code>wb_clipboard_op</code> · <code>wb_layers_edit</code> <span>the live editing surface — a paste is undone by diffing entity names before and after</span></li>
+              <li><code>wb_script_edit</code> <span>line edits with a Reload Scripts step attached, because entering play mode does <em>not</em> recompile</span></li>
+              <li><code>wb_prefab_save</code> · <code>wb_resources_register</code> · <code>wb_localization_edit</code> <span>write entities out to prefabs, give new files their GUID, edit the string table</span></li>
+              <li><code>wb_save</code> · <code>wb_open_resource</code> · <code>wb_play</code> / <code>wb_stop</code> <span>drive the editor session itself; opening a resource is transition-guarded because doing it mid-transition has crashed Workbench</span></li>
+              <li><code>wb_menu_action</code> <span>allowlisted menu actions only — an allowlist, never a blocklist</span></li>
             </ul>
+            <p class="tier-note">
+              Reversibility is decided per operation, not claimed per tool. Some undo exactly
+              (a layer lock is a toggle; a script line edit restores the prior text). Some are
+              derived (a paste is undone by diffing the entity list before and after). The rest
+              — saving a prefab, registering a resource, deleting a row — record
+              <em>no</em> inverse and say so, because a fabricated undo that looks like a
+              restore is worse than none.
+            </p>
           </article>
 
           <article class="tier-block is-planned">
@@ -339,10 +355,7 @@
               gap between designed and shipping stays visible.
             </p>
             <ul class="tool-list">
-              <li><code>wb_component_edit</code> · <code>wb_prefab_save</code> · <code>wb_layers_edit</code> <span>the remaining live editing surface</span></li>
-              <li><code>wb_script_edit</code> <span>edit scripts, with the Reload Scripts step attached automatically — play mode does not recompile</span></li>
-              <li><code>wb_resources_register</code> · <code>wb_save</code> · <code>wb_play</code> / <code>wb_stop</code> · <code>mod_build</code></li>
-              <li><code>mod_scaffold</code> · <code>game_duplicate</code> · <code>script_scaffold</code> <span>new addons and override skeletons</span></li>
+              <li><code>mod_build</code> <span>package an addon — deferred deliberately: there is no engine handler for it, so it needs a separate Workbench CLI invocation rather than a request to the running editor</span></li>
               <li><code>framework_addon_new</code> · <code>framework_placeable_add</code> · <code>framework_action_add</code> · <code>framework_attribute_add</code> · <code>framework_panel_add</code> <span>the extension contract turned into guided, contract-validated automation</span></li>
               <li><code>framework_mode_override_apply</code> <span>the single minimal-diff mode override, GUID re-verified against the installed build first</span></li>
               <li><code>exp_run</code> <span>drive the validation experiments end to end and emit a structured report</span></li>

@@ -16,9 +16,9 @@ The live site lives in `docs/`.
 The site is a status page, not marketing, and it is written to stay honest as the work
 moves. When updating it, keep these distinctions intact:
 
-- **reforge-mcp exists and runs.** Milestones M0-M6 are complete: 37 tools under the
-  `workbench` profile, 20 under `research`, 246 tests green. The figures quoted on the page
-  are measured against Arma Reforger build 24903726.
+- **reforge-mcp exists and runs.** Milestones M0-M6 are complete: 56 tools under the
+  `workbench` profile (23 of them writers), 20 under `research` with none, 274 tests green.
+  The figures quoted on the page are measured against Arma Reforger build 24903726.
 - **The framework does not exist yet.** Phase 8 has not started. The extension contract is
   specified and the F-1..F-15 build list is written, but no framework code has shipped.
 - **The three "novel capabilities"** — concurrent multi-GM editing, multi-step undo/redo in
@@ -39,7 +39,8 @@ Icons in `docs/assets/icons/` — see `docs/assets/ATTRIBUTION.txt`.
 **2026-09-07.** Design phases 1-6 complete. Phase 7 (code scaffolding) in progress:
 `reforge-mcp` with **M0 through M6 complete** — the research profile is feature-complete,
 the live Workbench bridge is up, and the server can write behind a twelve-point safety
-model. Framework implementation (Phase 8) has not begun.
+model. Every writer the spec lists now exists except `mod_build`, which is deferred on
+purpose: no engine handler exists for it. Framework implementation (Phase 8) has not begun.
 
 Not affiliated with Bohemia Interactive. No Bohemia content is redistributed — every index
 `reforge-mcp` uses is generated from the user's own installation.
