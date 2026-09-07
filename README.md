@@ -17,7 +17,7 @@ The site is a status page, not marketing, and it is written to stay honest as th
 moves. When updating it, keep these distinctions intact:
 
 - **reforge-mcp exists and runs.** Milestones M0-M6 are complete: 58 tools under the
-  `workbench` profile (25 of them writers), 20 under `research` with none, 293 tests green.
+  `workbench` profile (25 of them writers), 20 under `research` with none, 296 tests green.
   The figures quoted on the page are measured against Arma Reforger build 24903726.
 - **The framework does not exist yet.** Phase 8 has not started. The extension contract is
   specified and the F-1..F-15 build list is written, but no framework code has shipped.
@@ -26,6 +26,10 @@ moves. When updating it, keep these distinctions intact:
   project. They are not implemented and are not promised.
 - **Tools listed as "planned" on the page must stay visibly planned.** The tool section
   separates what ships today from what is designed but unbuilt; do not merge the two.
+- **The handlers section explains the bridge, not the tooling.** It is the part readers ask
+  about most: how a program outside the game drives the editor inside it. Keep it conceptual —
+  no code, no file paths — and keep the honest cost in it, including that one bad handler edit
+  takes the whole bridge down.
 - **"What's new" is a build log, not a highlight reel.** Defects found and fixed belong in it
   alongside features. Three of the current entries are bugs; that is deliberate. Entries are
   added when work lands, and each one should be traceable to `EVIDENCE_LEDGER.md`.

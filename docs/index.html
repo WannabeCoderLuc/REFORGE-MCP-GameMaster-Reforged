@@ -26,6 +26,7 @@
       <a href="#today">What works</a>
       <a href="#whatsnew">What’s new</a>
       <a href="#tools">Tools</a>
+      <a href="#handlers">Handlers</a>
       <a href="#pillars">Pillars</a>
       <a href="#roadmap">Roadmap</a>
       <a href="#opensource">Open Source</a>
@@ -64,7 +65,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          Phase 7 · reforge-mcp v0.1.0 · M0–M6 complete · 58 tools · 293 tests green
+          Phase 7 · reforge-mcp v0.1.0 · M0–M6 complete · 58 tools · 296 tests green
         </p>
       </div>
     </section>
@@ -237,6 +238,47 @@
         </div>
 
         <ol class="wn-list">
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Gear.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>A capability we’d written off was there all along</h3>
+              <p>
+                Setting the editor’s selection from outside was recorded as impossible — on the
+                strength of a comment inside the bridge code saying the engine didn’t offer it.
+                The engine offered it two lines away in the same interface that code was
+                already using.
+              </p>
+              <p class="wn-note">
+                Rewritten, it worked on the first attempt. The rule that came out of it: a
+                comment is not evidence, and neither is an absent feature until the declaring
+                class has been checked.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-07">7 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Gear.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>Copy-paste could corrupt a world, and its undo never worked</h3>
+              <p>
+                Pasting a duplicate of a one-per-world entity made the engine assert. And the
+                undo built for pasting — comparing entity names before and after — could never
+                have worked, because pasted entities routinely have no name at all.
+              </p>
+              <p class="wn-note">
+                Pasting now requires explicit confirmation and warns about duplicating
+                singletons, and the undo defers to the editor’s own undo stack, which handled
+                the case our approach couldn’t even see.
+              </p>
+            </div>
+          </li>
 
           <li class="wn-entry" data-wn-kind="new">
             <div class="wn-meta">
@@ -489,9 +531,9 @@
               <li><code>mod_scaffold</code> · <code>game_duplicate</code> <span>a new addon skeleton, or a vanilla resource copied with a <em>fresh</em> GUID — a copy that keeps the original GUID is a merge, not a duplicate</span></li>
               <li><code>script_scaffold</code> <span>subclass a base class using the overridable signatures that shipped in <em>your</em> build, read from the symbol index</span></li>
               <li><code>config_scaffold</code> · <code>layout_scaffold</code> <span>new <code>.conf</code> / <code>.layout</code> resources with minted, collision-checked GUIDs and their <code>.meta</code></span></li>
-              <li><code>wb_entity_create</code> · <code>wb_entity_modify</code> · <code>wb_entity_select</code> <span>spawn, edit and select live entities; undo restores the prior state</span></li>
+              <li><code>wb_entity_create</code> · <code>wb_entity_modify</code> · <code>wb_entity_select</code> <span>spawn, edit and select live entities; undo restores the prior state, selection included</span></li>
               <li><code>wb_entity_delete</code> <span>needs explicit confirmation, and is honest that undo will not bring it back</span></li>
-              <li><code>wb_component_edit</code> · <code>wb_clipboard_op</code> · <code>wb_layers_edit</code> <span>the live editing surface — a paste is undone by diffing entity names before and after</span></li>
+              <li><code>wb_component_edit</code> · <code>wb_clipboard_op</code> · <code>wb_layers_edit</code> <span>the live editing surface — a paste is undone through the editor’s own undo stack, because pasted entities frequently have no name to delete them by</span></li>
               <li><code>wb_script_edit</code> <span>line edits with a Reload Scripts step attached, because entering play mode does <em>not</em> recompile</span></li>
               <li><code>wb_prefab_save</code> · <code>wb_resources_register</code> · <code>wb_localization_edit</code> <span>write entities out to prefabs, give new files their GUID, edit the string table</span></li>
               <li><code>wb_save</code> · <code>wb_open_resource</code> · <code>wb_play</code> / <code>wb_stop</code> <span>drive the editor session itself; opening a resource is transition-guarded because doing it mid-transition has crashed Workbench</span></li>
@@ -534,6 +576,84 @@
           Two rules hold across every tier: results say which game build they came from, so a
           stale answer announces itself; and nothing that reaches outward — no Workshop
           upload, no publish — exists as a tool at all.
+        </p>
+      </div>
+    </section>
+
+
+    <section id="handlers" class="section handlers">
+      <div class="section-inner">
+        <p class="eyebrow">The bridge</p>
+        <h2>Handlers: the editor’s side of the conversation.</h2>
+        <p class="section-lede">
+          The most-asked question about this project is how a program outside Arma Reforger
+          can drive the editor inside it. The answer is a small addon of <strong>handlers</strong>,
+          and understanding them explains most of the server’s design.
+        </p>
+
+        <div class="hand-grid">
+          <article class="hand-card">
+            <h3>What they are</h3>
+            <p>
+              Workbench ships a network listener but <em>no functions</em>. It accepts a request
+              naming an operation and looks for a script class that implements it — and if
+              none exists, nothing happens. A handler is that class: a small piece of the
+              editor’s own scripting language saying “when this request arrives, run this
+              inside the editor, and send this back”.
+            </p>
+            <p class="hand-note">
+              22 of them, in a dedicated addon. They are the bridge’s entire vocabulary.
+            </p>
+          </article>
+
+          <article class="hand-card">
+            <h3>Why they’re necessary</h3>
+            <p>
+              Everything the editor knows — the entity list, resolved prefab components, the
+              resource database, the selection, the undo stack — is reachable only from inside
+              the editor’s own script environment. There is no outside interface to any of it.
+            </p>
+            <p class="hand-note">
+              So if the handlers don’t expose a capability, it doesn’t exist for the server.
+              No amount of work on the outside creates it. Adding a handler is a normal step,
+              not an exotic one.
+            </p>
+          </article>
+
+          <article class="hand-card">
+            <h3>Why they’re a separate addon</h3>
+            <p>
+              They are development tooling, not game content. Keeping them apart means the mod
+              being worked on stays clean, and retires an old hazard from the predecessor tool:
+              it injected handlers into whichever project was open, so merely
+              <em>connecting</em> modified the thing under test.
+            </p>
+            <p class="hand-note">
+              They are stripped from the framework’s dependencies before any release.
+            </p>
+          </article>
+
+          <article class="hand-card is-warn">
+            <h3>What they cost</h3>
+            <p>
+              A handler only becomes live when the editor <em>restarts</em> — reloading scripts
+              updates existing code but never registers a new class. And an edit is
+              all-or-nothing: one bad symbol fails the whole script module and takes
+              <strong>every</strong> handler offline at once, not just the edited one.
+            </p>
+            <p class="hand-note">
+              That happened here. A method that exists — but on a different class than assumed
+              — took the bridge down until the file was reverted.
+            </p>
+          </article>
+        </div>
+
+        <p class="proof-line">
+          <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
+          A comment inside a handler is not evidence either. One claimed the editor could not
+          set a selection programmatically, and its code did nothing while still reporting
+          success. The engine had offered that call all along, two lines apart in the same API
+          the handler was already using — rewriting it made selection work on the first try.
         </p>
       </div>
     </section>
