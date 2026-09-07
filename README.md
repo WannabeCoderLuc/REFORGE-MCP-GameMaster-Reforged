@@ -1,10 +1,10 @@
-# NEWGAMEMASTER — project site
+# Project Sandtable — project site
 
 Static roadmap and project-explanation site for two related, in-progress projects:
 
 - **reforge-mcp** — an open-source research + Workbench MCP server for Arma Reforger /
   Enfusion. **Being built now.**
-- **NEWGAMEMASTER** — a planned extensible live Game Master framework ("live 3DEN" as a
+- **Project Sandtable** — a planned extensible live Game Master framework ("live 3DEN" as a
   research ambition, not a feature-parity promise). **Designed, not yet implemented.**
 
 The server is deliberately built first, then used to build the framework.
