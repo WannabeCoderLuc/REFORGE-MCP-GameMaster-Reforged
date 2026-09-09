@@ -3,19 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Project Sandtable — reforge-mcp, an open-source research and Workbench-automation server for Arma Reforger's Enfusion engine, and the live Game Master scenario-authoring framework it is being built to build. Roadmap and project explanation." />
+  <meta name="description" content="Project Sandtable — reforge-mcp, an open-source research and Workbench-automation server for Arma Reforger's Enfusion engine. 71 tools built from your own installation. Game Master is the benchmark it is measured against. Status, build log and roadmap." />
   <meta name="theme-color" content="#1a2218" />
-  <title>Project Sandtable — Live Scenario Authoring for Arma Reforger</title>
+  <title>Project Sandtable — reforge-mcp for Arma Reforger</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Teko:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/project-sandtable-logo.png" />
+  <link rel="preload" as="image" href="assets/project-sandtable-logo.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#intro">Skip to content</a>
 
   <header class="site-nav" data-nav>
-    <a class="nav-brand" href="#top">PROJECT SANDTABLE</a>
+    <a class="nav-brand" href="#top" aria-label="Project Sandtable — home">
+      <span class="logo-crop logo-crop-nav" aria-hidden="true">
+        <img src="assets/project-sandtable-logo.png" alt="" width="2000" height="2000" />
+      </span>
+    </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
       <span class="sr-only">Menu</span>
       <span></span><span></span>
@@ -23,7 +29,7 @@
     <nav id="nav-menu" class="nav-links" data-nav-menu>
       <a href="#intro">Introduction</a>
       <a href="#mission">Mission</a>
-      <a href="#deliverables">Deliverables</a>
+      <a href="#deliverables">What it is</a>
       <a href="#today">What works</a>
       <a href="#whatsnew">What’s new</a>
       <a href="#tools">Tools</a>
@@ -45,19 +51,21 @@
         <div class="glow-b"></div>
       </div>
       <div class="hero-inner">
-        <p class="brand-mark">PROJECT SANDTABLE</p>
-        <h1>The server comes first.</h1>
+        <div class="brand-mark logo-crop logo-crop-hero">
+          <img src="assets/project-sandtable-logo.png" alt="Project Sandtable" width="2000" height="2000" />
+        </div>
+        <h1>The server is the project.</h1>
         <p class="hero-lede">
-          <strong>reforge-mcp</strong> is this project’s primary deliverable: a research and
-          Workbench-automation server for Enfusion, built entirely from your own installation.
-          <strong>Project Sandtable</strong> — live scenario authoring inside a running
-          Reforger session — is what it is being built to build, and the hardest thing it has
-          to prove itself against.
+          <strong>reforge-mcp</strong> is a research and Workbench-automation server for
+          Enfusion, built entirely from your own installation. Its goal is that a real Arma
+          Reforger mod can be built <em>through</em> it — and <strong>Game Master</strong>,
+          Reforger’s live scenario editor, is the benchmark: the hardest thing in the game to
+          point tooling at, and therefore the measure of whether the tooling works.
         </p>
         <p class="hero-note">
-          Work in progress, in the open. The server reads, drives and writes; the
-          framework’s spine is attached and proven in a live world, with the
-          features themselves still ahead.
+          Work in progress, in the open. The server reads the game, drives the editor and
+          writes carefully — and a custom Game Master action built through it has been watched
+          running in a live session.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#roadmap">
@@ -66,12 +74,12 @@
           </a>
           <a class="btn btn-ghost" href="#deliverables">
             <img src="assets/icons/SolidArrow-Right.svg" alt="" width="18" height="18" />
-            Twin deliverables
+            What it is
           </a>
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          Phase 7 · reforge-mcp v0.1.0 · M0–M8 complete · 68 tools · 317 tests green
+          reforge-mcp v0.1.0 · the project (D-0017) · 71 tools · 366 tests green · five acceptance capabilities proven
         </p>
       </div>
       <div class="hero-signal" aria-hidden="true">
@@ -105,8 +113,28 @@
         </p>
 
         <p class="section-lede">
-          The framework is the ambition. The server is the deliverable that comes first, and
-          that ordering is deliberate rather than incidental.
+          <strong>As of 9 September 2026 the server is the whole of it.</strong> The framework
+          rebuild is cancelled. Game Master is now the <em>target domain the server has to be
+          able to mod</em> — the hardest thing to point it at, and therefore the measure of
+          whether it works.
+        </p>
+
+        <p class="section-lede">
+          That was not a change of taste. Building one small Game Master feature through the
+          tooling — a context action that reports how far each selected entity floats above the
+          terrain — surfaced <strong>seven separate defects in the tooling meant to make it
+          easy</strong>. Every one compiled cleanly and failed silently: a base-class check that
+          rejected the only base real context actions use, generated code with method signatures
+          that could not compile, a config file with no GUID so the engine never registered it,
+          and an action the engine loaded, merged, evaluated and then hid because one method was
+          missing. Trying to build something found all of that. Counting features would have
+          found none of it.
+        </p>
+
+        <p class="section-lede">
+          So the goal is measured by attempt, not by inventory: <strong>can a real mod be built
+          with this?</strong> Every friction point met while trying counts as a defect in the
+          server rather than something to work around by hand.
         </p>
 
         <div class="mission-grid">
@@ -154,33 +182,36 @@
     <section id="mission" class="section mission">
       <div class="section-inner">
         <p class="eyebrow">The mission</p>
-        <h2>Bring 3DEN-class authoring into live Game Master.</h2>
+        <h2>Make Game Master moddable from an assistant, comfortably.</h2>
         <p class="section-lede">
-          Nothing in the Arma lineage yet combines 3DEN’s authoring depth, a live
-          network-replicated session, real multi-user collaboration, a documented
-          moddability model, and open source. That gap is the north star.
+          The measure is not how many tools exist. It is whether someone — or something —
+          can sit down and build a real Game Master feature end to end through this server:
+          author it, compile it, load it, and watch it run, without hand-editing files or
+          hand-driving the editor. Every friction point met on that path is counted as a
+          defect in the server rather than something to work around.
         </p>
         <p class="section-lede">
           Hence the name. A <strong>sand table</strong> is the terrain model commanders
           gather around to plan and rehearse an operation — rearranged by hand, in the open,
           by several people at once, while the situation is still moving. Game Master is that
-          table. This project is an attempt to give it the depth the job actually needs.
+          table, and it is the hardest thing in Reforger to point tooling at. That is exactly
+          why it is the benchmark.
         </p>
         <div class="mission-grid">
           <article class="mission-point">
             <img src="assets/icons/target.png" alt="" width="40" height="40" />
             <h3>Preserve vanilla</h3>
-            <p>Keep essential Game Master workflows intact. Additive only — vanilla panels, actions, and content stay.</p>
+            <p>Anything built through the server is additive. Vanilla panels, actions and content stay — a tool that has to break Game Master to change it has failed.</p>
           </article>
           <article class="mission-point">
             <img src="assets/icons/expand.png" alt="" width="40" height="40" />
             <h3>Documented contracts</h3>
-            <p>Content-only config merges and scripted registration points so creators never touch fragile framework internals.</p>
+            <p>Content-only config merges and scripted registration points, so what the server generates never touches the engine’s fragile surfaces by hand.</p>
           </article>
           <article class="mission-point">
             <img src="assets/icons/friends.png" alt="" width="40" height="40" />
             <h3>Multiplayer-first</h3>
-            <p>Client visualisation vs server execution — mutations validate on the server, visual ghosts never enter an RPC.</p>
+            <p>Game Master is a live networked session, so generated code has to respect it: mutations validate on the server, visual ghosts never enter an RPC.</p>
           </article>
         </div>
       </div>
@@ -188,13 +219,15 @@
 
     <section id="deliverables" class="section deliverables">
       <div class="section-inner">
-        <p class="eyebrow">Twin deliverables</p>
-        <h2>One research server. One framework.</h2>
+        <p class="eyebrow">One deliverable, one benchmark</p>
+        <h2>The server is the project. Game Master is how it is measured.</h2>
         <p class="section-lede">
-          The server is the primary deliverable and ships first; the framework is what it is
-          being built to build. Both are intended for open-source community handoff — and the
-          server can be adopted entirely on its own, by anyone modding Reforger, without the
-          framework.
+          There used to be two deliverables here. Since <strong>D-0017</strong> there is one:
+          <code>reforge-mcp</code>. The Game Master framework rebuild is cancelled as a product,
+          and Game Master remains as the <em>target domain the server has to be able to mod</em> —
+          the hardest thing in Reforger to point tooling at, and therefore the honest test of
+          whether the tooling works. The server is intended for open-source handoff and can be
+          adopted entirely on its own, by anyone modding Reforger.
         </p>
 
         <div class="duo">
@@ -202,7 +235,7 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Primary deliverable · ships first · 68 tools working</p>
+                <p class="duo-label">The project · 71 tools · all five acceptance capabilities proven</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -225,22 +258,23 @@
             <div class="duo-head">
               <img src="assets/icons/flag.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">What the server is for · spine built &amp; proven, features ahead</p>
-                <h3>Project Sandtable</h3>
+                <p class="duo-label">Not a product · the benchmark the server is judged against</p>
+                <h3>Game Master</h3>
               </div>
             </div>
             <p>
-              A planned live scenario-authoring layer on top of Reforger’s native editor —
-              extending transform, attributes, commands, UI panels, triggers, save/load,
-              permissions, and undo — without replacing vanilla Game Master.
-              The extension contract is specified, the spine is built and proven in a live
-              world, and the features are the work ahead.
+              Reforger’s live, network-replicated scenario editor — and the domain the server
+              has to be able to mod. It was going to be rebuilt; it is not being rebuilt.
+              What survives is the extension contract and the spine that proves the approach
+              works, both of which are now used as <em>test material</em>: concrete, non-trivial
+              things to attempt through the server so that its gaps show up as failures rather
+              than as omissions nobody noticed.
             </p>
             <ul class="duo-list">
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Content-only + scripted extension tiers</span></li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Owns the fragile <code>EditorModeEdit.et</code> surface</span></li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Portable scenario serialization pipeline</span></li>
-              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">F-1…F-15 build list from the extension contract</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Content-only + scripted extension tiers, both exercised</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">The fragile <code>EditorModeEdit.et</code> surface, overridden without breakage</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">A tier-B context action built and running in a live session</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">F-1…F-15 — a bank of test cases, not a roadmap</span></li>
             </ul>
           </article>
         </div>
@@ -258,9 +292,12 @@
         </p>
         <p class="section-lede">
           Beyond the indexes: the live bridge into Workbench is up, the full write set has been
-          exercised against a loaded world of 173,637 entities, and the framework’s spine is
-          attached to Game Master’s edit mode and confirmed running there. Workbench can be
-          launched, driven and closed without a human present.
+          exercised against a loaded world of 173,637 entities, and a custom Game Master action
+          built through this tooling has been watched running inside a live session. Workbench
+          can be launched on a chosen project, made to load a world, switched between Edit and
+          Play, and closed again — all driven from outside. One human click remains, and stays
+          on purpose: Steam’s own confirmation prompt for launching with custom arguments,
+          which is the thing guarding exactly this capability.
         </p>
 
         <div class="stat-grid">
@@ -335,13 +372,149 @@
 
         <ol class="wn-list">
 
+          <li class="wn-entry" data-wn-kind="changed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-changed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Changed</span>
+            </div>
+            <div class="wn-body">
+              <h3>The goal changed: the server is the project now</h3>
+              <p>
+                Rebuilding Game Master as a framework is cancelled. The whole project is the
+                server, and Game Master is kept as the thing the server has to be able to mod —
+                the benchmark, not the product. The fourteen wanted features are now a bank of
+                test cases; each one is something to attempt <em>through</em> the tooling, and
+                whatever gets in the way is logged as a defect in the tooling.
+              </p>
+              <p>
+                That was decided on evidence rather than preference. Building one small Game
+                Master feature — a context action reporting how far each selected entity floats
+                above the terrain — surfaced <strong>seven defects in the scaffolding meant to
+                make exactly that easy</strong>. Every one of them compiled cleanly and failed
+                silently: overrides written with the wrong number of parameters, a generated
+                config with no sidecar and therefore no GUID, folders emitted in the wrong place,
+                and a base-class check that compared names instead of asking what a class
+                actually inherits from.
+              </p>
+              <p class="wn-note">
+                Trying to build something found all seven. Counting features would have found
+                none — which is the argument for the change, and the reason the feature list is
+                kept rather than deleted.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-new"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />New</span>
+            </div>
+            <div class="wn-body">
+              <h3>Workbench opens, loads a world, switches mode, and closes — on command</h3>
+              <p>
+                Five capabilities were named as the definition of “usable”, and all five now have
+                a reading behind them rather than a call that returned success. Workbench launches
+                <em>on a chosen project</em> — proven by the session log listing all five project
+                files as loaded addons, not by the process appearing. It closes and restarts
+                cleanly. It creates addons and loads worlds both at launch and mid-session —
+                proven by the live entity count going from 1 to 173,637. It switches between Edit
+                and Play in both directions, with the mode re-read after each switch. And it
+                searches Bohemia’s own published API documentation through two new tools.
+              </p>
+              <p>
+                Two of those took a correction first. Launching by running the executable directly
+                dies on “Could not initialize Steam platform”, because it is a Steam build — the
+                launch has to go through Steam itself. And loading a world failed until it became
+                clear the call had been aimed at the wrong editor module all along; the module you
+                ask decides which editor opens the file.
+              </p>
+              <p class="wn-note">
+                One human click remains and stays: Steam’s own prompt confirming a launch with
+                custom arguments. It guards precisely this capability, so it is documented rather
+                than defeated.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>Ten more double-length lists, and a rule that could not be checked</h3>
+              <p>
+                The bug that made every list from the bridge come back at double length was fixed
+                once and found again in ten more places across eight handler files — the same
+                mistake in a second shape nobody had looked for. All ten are corrected, and the
+                check that catches them is now a linter with seventeen committed regression tests
+                behind it.
+              </p>
+              <p>
+                It needed them. The previous guarantee pointed at a backup folder on one machine
+                that has since been deleted, which quietly made the claim unfalsifiable. Writing
+                the tests also caught the linter’s own headline rule failing on its headline case:
+                a loop declaring two variables at once, the exact construct Enforce rejects, was
+                slipping past because the rule was anchored to the start of a line.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-new"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />New</span>
+            </div>
+            <div class="wn-body">
+              <h3>We closed the build gap with the official API</h3>
+              <p>
+                We ingested more than 33,000 files from Bohemia Interactive’s official Doxygen
+                output and found the interfaces our project had been missing: the supported
+                Workbench CLI for headless validation, cooking and packing, plus built-in Net API
+                calls including <code>ValidateScripts</code>, <code>IsWorkbenchRunning</code> and
+                <code>ReloadScripts</code>. Those calls surface structured compiler errors without
+                depending on a custom handler. The same pass exposed <code>EvaluateScript</code>;
+                we treat that arbitrary-execution surface as untrusted and keep it locked down.
+              </p>
+              <p>
+                That evidence turned <code>mod_build</code> from a documented omission into a
+                shipping tool. It now validates scripts headlessly with <code>-wbSilent</code>, builds
+                target-platform data with <code>-run -builddata</code>, and packs cooked addon
+                directories with <code>-packAddon</code>. Publishing and login flags are rejected,
+                only one build may run at a time, and the result is checked against the logs rather
+                than trusting a zero exit code.
+              </p>
+              <p class="wn-note">
+                Verified live: engine registration succeeded, and <code>mod_build validate</code>
+                has since compiled all four script modules headlessly in about five seconds — a gate
+                cheap enough to run after every handler edit instead of paying for a restart.
+                <code>build</code> and <code>pack</code> are implemented but have not yet been run.
+                We also confirmed that Workbench plugin APIs are limited to World Editor and Script
+                Editor.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-08">8 Sep 2026</time>
+              <span class="wn-tag t-new"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />New</span>
+            </div>
+            <div class="wn-body">
+              <h3>Scale and Stability: 13 MCP Features, Subagents, and Bridge Fixes</h3>
+              <p>
+                Identified and fixed Enforce script syntax errors (comma initialization and ternary operators) in <code>EMCP_WB_Inspect.c</code> that caused Workbench crashes. Created 5 new <code>SKILL.md</code> files (<code>mcp-gamemaster-site-workflow</code>, <code>workbench-safety-model</code>, <code>mcp-server-dev</code>, <code>game-master-framework-dev</code>, <code>enforce-script-gotchas</code>) to encode project constraints. Defined 3 new Antigravity subagents (<code>researcher-planner</code>, <code>programmer-tester</code>, <code>api-handler-creator</code>) and established a new roadmap of 13 MCP programmatic features and 3 specialized AI agents.
+              </p>
+            </div>
+          </li>
+
           <li class="wn-entry" data-wn-kind="new">
             <div class="wn-meta">
               <time datetime="2026-09-07">7 Sep 2026</time>
               <span class="wn-tag t-new"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />New</span>
             </div>
             <div class="wn-body">
-              <h3>The question blocking thirteen features is answered</h3>
+              <h3>Same-GUID overrides union — so extensions can be separate addons</h3>
               <p>
                 When two mods claim the same file, does the engine keep both contributions or
                 only the last one? It keeps both. A second mod — written to know nothing about
@@ -681,7 +854,7 @@
 
         <p class="proof-line">
           <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
-          <span class="icon-copy">Three of the entries above are defects found by running the tools against a real
+          <span class="icon-copy">Many of the entries above are defects found by running the tools against a real
           editor rather than a test fixture. They are listed because a build log that only
           records wins is not a build log.</span>
         </p>
@@ -691,7 +864,7 @@
     <section id="tools" class="section tools">
       <div class="section-inner">
         <p class="eyebrow">The toolbox</p>
-        <h2>68 tools shipping. More designed.</h2>
+        <h2>71 tools shipping. Nothing left designed-but-absent.</h2>
         <p class="section-lede">
           Tools are grouped into <strong>capability tiers</strong>, and the tier decides
           whether a tool exists at all. Under the default <code>research</code> profile the
@@ -703,11 +876,11 @@
         <div class="profile-bar">
           <div class="profile-chip">
             <span class="chip-name">research</span>
-            <span class="chip-meta">default · 20 tools · <strong>0 writers</strong></span>
+            <span class="chip-meta">default · 24 tools · <strong>0 writers</strong></span>
           </div>
           <div class="profile-chip is-opt">
             <span class="chip-name">workbench</span>
-            <span class="chip-meta">opt-in · 68 tools · 32 writers</span>
+            <span class="chip-meta">opt-in · 71 tools · guarded build pipeline</span>
           </div>
         </div>
 
@@ -751,6 +924,7 @@
             <ul class="tool-list">
               <li><code>source_read</code> <span>one symbol, line range, or match neighbourhood — never a whole 79&nbsp;KB file</span></li>
               <li><code>source_grep</code> <span>search <em>inside</em> the game's <code>.pak</code> archives, where ordinary tools cannot look</span></li>
+              <li><code>doxygen_search</code> · <code>doxygen_read</code> <span>Bohemia’s own published API documentation — classes, methods, enums and the hand-written guide pages — searched from its shipped index and read back as text. It is two engine versions behind, so it is a source of intent and prose, not of ground truth; the source-derived indexes above remain the authority on what your build actually contains</span></li>
               <li><code>logs_read</code> <span>Workbench compile errors and warnings, readable with Workbench closed</span></li>
               <li><code>reindex</code> <span>explicit rebuild against the installed game — never silent</span></li>
               <li><code>diagnose</code> <span>config, roots, manifests, index freshness, bridge reachability</span></li>
@@ -803,7 +977,7 @@
               <li><code>wb_component_edit</code> · <code>wb_clipboard_op</code> · <code>wb_layers_edit</code> <span>the live editing surface — a paste is undone through the editor’s own undo stack, because pasted entities frequently have no name to delete them by</span></li>
               <li><code>wb_script_edit</code> <span>line edits with a Reload Scripts step attached, because entering play mode does <em>not</em> recompile</span></li>
               <li><code>wb_prefab_save</code> · <code>wb_resources_register</code> · <code>wb_localization_edit</code> <span>write entities out to prefabs, give new files their GUID, edit the string table</span></li>
-              <li><code>wb_save</code> · <code>wb_open_resource</code> · <code>wb_play</code> / <code>wb_stop</code> <span>drive the editor session itself; opening a resource is transition-guarded because doing it mid-transition has crashed Workbench</span></li>
+              <li><code>wb_save</code> · <code>wb_open_resource</code> · <code>wb_play</code> / <code>wb_stop</code> <span>drive the editor session itself — including loading a world into the running editor, which needs the world target specifically, because the module you ask decides which editor opens the file. Opening a resource is transition-guarded, because doing it mid-transition has crashed Workbench</span></li>
               <li><code>wb_menu_action</code> <span>allowlisted menu actions only — an allowlist, never a blocklist</span></li>
               <li><code>wb_dialogs</code> <span>clear the modal dialogs that block the editor's automation bridge — reject-only, so it can decline a prompt but never accept one</span></li>
               <li><code>wb_process</code> <span>start, close and restart the editor; handler code only registers at process start, so this is what makes an unattended add-and-verify loop possible</span></li>
@@ -841,19 +1015,27 @@
             </ul>
           </article>
 
-          <article class="tier-block">
+          <article class="tier-block is-write">
             <header>
-              <span class="tier-tag t0">Next</span>
-              <h3>Deliberately absent</h3>
-              <span class="tier-state planned">Not built</span>
+              <span class="tier-tag t2">Build</span>
+              <h3>Headless validation, build &amp; pack</h3>
+              <span class="tier-state shipped">Shipping · guarded</span>
             </header>
             <p class="tier-note">
-              One tool the specification lists and this server does not have. Listed rather than
-              quietly dropped, so the gap stays visible.
+              Official Workbench CLI documentation replaced the earlier assumption that packaging
+              had no safe automation path. The build process remains separate from the live editor
+              bridge and is constrained to three enumerated actions.
             </p>
             <ul class="tool-list">
-              <li><code>mod_build</code> <span>package an addon. There is no engine handler for it: packaging needs a separate command-line invocation, which is a different kind of thing from sending a request to a running editor — it spawns a long-lived process, writes outside every configured root, and has no way to be undone. Faking it through the bridge would be worse than not having it</span></li>
+              <li><code>mod_build validate</code> <span>headless script compile check through <code>-wbSilent</code>, with structured errors surfaced from Workbench</span></li>
+              <li><code>mod_build build</code> <span>compile mod data for an explicitly selected target platform through <code>-run -builddata</code></span></li>
+              <li><code>mod_build pack</code> <span>archive an existing cooked addon directory through <code>-packAddon</code></span></li>
             </ul>
+            <p class="tier-note">
+              The final argument vector is checked for publishing and login parameters, concurrent
+              builds are refused, and logs are scanned after execution. A zero exit code by itself
+              is never reported as proof of success. <code>EvaluateScript</code> remains unavailable.
+            </p>
           </article>
 
         </div>
@@ -889,7 +1071,7 @@
               inside the editor, and send this back”.
             </p>
             <p class="hand-note">
-              22 of them, in a dedicated addon. They are the bridge’s entire vocabulary.
+              23 of them, in a dedicated addon. They are the bridge’s entire vocabulary.
             </p>
           </article>
 
@@ -1028,10 +1210,12 @@
     <section id="pillars" class="section pillars">
       <div class="section-inner">
         <p class="eyebrow">Architecture</p>
-        <h2>Four pillars of the framework vision.</h2>
+        <h2>Four seams the tooling has to work through.</h2>
         <p class="section-lede">
-          Research ambition — not a feature-parity promise. Each pillar builds on
-          verified Enfusion editor seams.
+          These were the pillars of the cancelled framework. They are kept because they are the
+          real structure of the problem: any tool that means to change Game Master has to go
+          through these four seams, so they are what the server is exercised against. Each one is
+          a verified Enfusion seam, not a proposal.
         </p>
 
         <ol class="pillar-list">
@@ -1090,11 +1274,13 @@
     <section id="novel" class="section novel">
       <div class="section-inner">
         <p class="eyebrow">Why it matters</p>
-        <h2>Three capabilities nobody has done live in Arma.</h2>
+        <h2>Three things nobody has done live in Arma.</h2>
         <p class="section-lede">
-          These are the project’s <strong>targets</strong>, not shipped features. They are also
-          its highest-risk work: each is rated hard in the feasibility notes <em>and</em> sits at
-          the top of the community’s complaints — which is exactly why they are worth attempting.
+          These are <strong>not promises and not shipped features</strong> — nothing is being
+          built to deliver them. They are here as the hardest test cases on the list: each is
+          rated hard in the feasibility notes <em>and</em> sits at the top of the community’s
+          complaints, which makes each one a good way to find out where the server stops being
+          useful.
         </p>
         <div class="novel-grid">
           <article>
@@ -1121,17 +1307,27 @@
         <p class="eyebrow">Roadmap</p>
         <h2>From research maps to open-source handoff.</h2>
         <p class="section-lede">
-          Design phases 1–6 are complete and implementation is authorized. The bridge is up,
-          the server writes, and the framework’s spine is attached and proven in a live
-          world. The question that decided how the remaining thirteen features get built has
-          been answered — they can be addons — so what remains is building them.
+          <strong>The roadmap is no longer a feature list.</strong> Every tool in the spec now
+          exists — including the packaging tool deferred twice — and the five capabilities that
+          define “usable” are proven rather than claimed: open Workbench on a project, close and
+          restart it, create addons and load worlds, switch between Edit and Play, and search
+          Bohemia’s own API documentation.
+        </p>
+
+        <p class="section-lede">
+          What remains is not thirteen features. It is <em>attempting</em> them through the
+          server and fixing whatever gets in the way. The feature list below is kept as a bank
+          of test cases — each one a concrete, non-trivial thing to point the tooling at — and
+          the honest next steps are the friction already identified: an AI-inspection call that
+          has never run against real AI groups, a packaging path where only the compile check has
+          executed, and a display name that comes back as a raw localization key.
         </p>
 
         <div class="roadmap-tabs" role="tablist" aria-label="Roadmap views">
           <button class="tab is-active" role="tab" aria-selected="true" data-tab="phases">Project phases</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="mcp">MCP milestones</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="framework">Framework F-list</button>
-          <button class="tab" role="tab" aria-selected="false" data-tab="wishlist">Feature wishlist</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="wishlist">Test-case bank</button>
         </div>
 
         <div class="tab-panel is-active" data-panel="phases" role="tabpanel">
@@ -1143,8 +1339,8 @@
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>5</strong> reforge-mcp server spec + build plan</span></li>
             <li class="done"><span class="badge">Done</span><span class="tl-body"><strong>6</strong> Validation experiments EXP-1…6 designed</span></li>
             <li class="active"><span class="badge">Now</span><span class="tl-body"><strong>7</strong> Code scaffolding — MCP M0–M8 done · live bridge up, writers gated</span></li>
-            <li class="gated"><span class="badge">Gated</span><span class="tl-body"><strong>8</strong> Implementation — F-1…F-15 via workbench tooling</span></li>
-            <li class="gated"><span class="badge">Gated</span><span class="tl-body"><strong>9</strong> Testing — run EXP-1…6 for real</span></li>
+            <li class="gated"><span class="badge">Gated</span><span class="tl-body"><strong>8</strong> Retired — the framework rebuild is cancelled (D-0017); features are test cases now</span></li>
+            <li class="gated"><span class="badge">Gated</span><span class="tl-body"><strong>9</strong> Attempt a real mod through the server; fix what blocks it</span></li>
             <li class="later"><span class="badge">Final</span><span class="tl-body"><strong>10</strong> Consolidation · docs site · community handoff</span></li>
           </ol>
         </div>
@@ -1360,7 +1556,7 @@
           <article class="hand-card">
             <h3>2 · Start in read-only</h3>
             <p>
-              It ships in the <code>research</code> profile: twenty tools, no writers, no
+              It ships in the <code>research</code> profile: twenty-four tools, no writers, no
               editor required. Everything about the engine — symbols, GUIDs, overrides, prefab
               resolution — is answerable in this mode with Arma Reforger closed.
             </p>
@@ -1481,7 +1677,7 @@
         </p>
 
         <p class="section-lede">
-          MIT, 61 tools, and it stands alone — it knows nothing about the framework and answers
+          MIT, 71 tools, and it stands alone — it knows nothing about any framework and answers
           questions about Enfusion. Clone it, point it at your own installation, build the
           indexes, and start in the read-only profile. No game content is redistributed: the
           indexes are generated locally, because they are derived from the copy of the game
@@ -1489,17 +1685,19 @@
         </p>
 
         <p class="section-lede">
-          The framework will follow the same way — as an extraction of the working version, once
-          there is one worth extracting.
+          There is no second package coming. The framework that was going to follow it is
+          cancelled, so the server is the handoff.
         </p>
 
         <p class="section-lede">
-          The work is now split four ways: a server and an editor framework, each in a personal
-          and an open-source edition. The open-source pair are <strong>extractions</strong> of
+          The workspace is split four ways: a server and a Game Master mod, each in a personal
+          and an open-source edition. The open-source editions are <strong>extractions</strong> of
           the personal ones once those work, not a second effort running in parallel — building
           the same thing twice at once is how both end up half-finished, and extracting means
           the licence-clean edition is made by <em>removing</em> encumbered assets from
-          something already proven.
+          something already proven. The two server trees are deliberately not mirrors: the public
+          one ships no user config and omits the experiment runner, so copying files wholesale
+          between them breaks it — and has.
         </p>
 
         <ul class="os-list">
@@ -1527,10 +1725,12 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <p class="footer-brand">PROJECT SANDTABLE</p>
-      <p>Roadmap &amp; project explanation site for the Game Master framework and reforge-mcp.
-        Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-07 · Phase 7 · reforge-mcp M0–M8 complete · 68 tools · 22 handlers · four-project split</p>
+      <div class="footer-brand logo-crop logo-crop-footer">
+        <img src="assets/project-sandtable-logo.png" alt="Project Sandtable" width="2000" height="2000" />
+      </div>
+      <p>Status and explanation site for <code>reforge-mcp</code>, a research and Workbench MCP
+        server for Arma Reforger. Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
+      <p class="footer-meta">Updated from project status 2026-09-09 · reforge-mcp is the project (D-0017) · 71 tools · 23 handlers · 366 tests · all five acceptance capabilities proven</p>
     </div>
   </footer>
 

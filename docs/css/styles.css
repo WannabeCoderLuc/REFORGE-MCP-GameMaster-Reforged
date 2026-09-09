@@ -106,12 +106,30 @@ code {
 }
 
 .nav-brand {
-  font-family: var(--font-display);
-  font-size: 1.55rem;
-  letter-spacing: 0.06em;
-  color: var(--ink);
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(10.5rem, 15vw, 13.5rem);
   text-decoration: none;
-  line-height: 1;
+}
+
+.logo-crop {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1846 / 556;
+}
+
+.logo-crop img {
+  position: absolute;
+  top: -125%;
+  left: -3.52%;
+  width: 108.34%;
+  max-width: none;
+  height: auto;
+}
+
+.logo-crop-nav {
+  width: 100%;
 }
 
 .nav-links {
@@ -230,14 +248,12 @@ code {
 
 .brand-mark {
   margin: 0 0 0.85rem;
-  font-family: var(--font-display);
-  font-size: clamp(3.4rem, 12vw, 6.5rem);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 0.9;
-  color: var(--ink);
-  text-shadow: 0 0 60px rgba(107, 143, 78, 0.35);
   animation: brand-in 1s var(--ease) both;
+}
+
+.logo-crop-hero {
+  width: min(100%, 38rem);
+  filter: drop-shadow(0 0 34px rgba(107, 143, 78, 0.3));
 }
 
 .hero h1 {
@@ -1118,10 +1134,10 @@ code {
 
 .footer-brand {
   margin: 0 0 0.75rem;
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  letter-spacing: 0.06em;
-  line-height: 1;
+}
+
+.logo-crop-footer {
+  width: min(16rem, 72vw);
 }
 
 .site-footer p {
