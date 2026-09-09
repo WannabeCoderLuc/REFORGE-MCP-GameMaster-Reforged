@@ -82,7 +82,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          reforge-mcp v0.1.0 · 71 tools · 23 handlers · 372 tests green · five acceptance capabilities proven · 3 known human-in-the-loop gaps
+          reforge-mcp v0.1.0 · 71 tools · 23 handlers · 378 tests green · five acceptance capabilities proven · 3 known human-in-the-loop gaps
         </p>
       </div>
       <div class="hero-signal" aria-hidden="true">
@@ -418,9 +418,44 @@
                 372 tests private, 353 plus 3 intentional skips open source.
               </p>
               <p class="wn-note">
-                Stated plainly: lint and tests are not a compile. Nothing has been through
-                Workbench since the rename, so “the bridge still answers” is unproven until the
-                editor has been restarted and asked.
+                Verified in a live editor, not inferred: Workbench was launched on the handler
+                addon, the log confirms the addon loaded, the script module compiled with zero
+                errors, and requests addressed to the new names came back — including
+                action-dispatched handlers, whose read-action allowlists key on the very class
+                name that changed.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>A mangled path started the server anyway</h3>
+              <p>
+                Repairing the config produced a better bug than the one being fixed. Written
+                through a shell that stripped backslashes, every path arrived as
+                <code>C:Program Files…</code> — which Windows accepts, because it means
+                “relative to the current directory on drive C:”. Nothing threw. The server
+                started, announced all 71 tools, and every configured root silently resolved
+                somewhere else. The only symptom was <code>diagnose</code> marking each path
+                MISSING, which reads like a broken install rather than a mangled string.
+              </p>
+              <p>
+                That is precisely the failure an unattended run cannot notice, so it is now
+                refused at startup with the cause named rather than reported later as five
+                unrelated missing directories. Absent-but-well-formed paths still only warn — a
+                missing Tools install leaves the research profile perfectly usable, and refusing
+                to start would be the worse answer. Six committed regression tests in each tree,
+                plus an end-to-end check that mangles the real config and confirms the server
+                now refuses it.
+              </p>
+              <p class="wn-note">
+                The wider lesson, and the reason it is written down: the bug was never in the
+                path logic. It was that a wrong value looked exactly like a right one to
+                everything downstream.
               </p>
             </div>
           </li>
@@ -1864,7 +1899,7 @@
       </div>
       <p>Status and explanation site for <code>reforge-mcp</code>, a research and Workbench MCP
         server for Arma Reforger. Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-09 · goal: an AI builds a Reforger mod unattended · 71 tools · 23 handlers · 372 tests · all five acceptance capabilities proven</p>
+      <p class="footer-meta">Updated from project status 2026-09-09 · goal: an AI builds a Reforger mod unattended · 71 tools · 23 handlers · 378 tests · all five acceptance capabilities proven</p>
     </div>
   </footer>
 
