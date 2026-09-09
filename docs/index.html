@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Project Sandtable — reforge-mcp, an open-source research and Workbench-automation server for Arma Reforger's Enfusion engine. 71 tools built from your own installation. Game Master is the benchmark it is measured against. Status, build log and roadmap." />
+  <meta name="description" content="Project Sandtable — reforge-mcp, an open-source research and Workbench-automation server for Arma Reforger's Enfusion engine. 72 tools built from your own installation. Game Master is the benchmark it is measured against. Status, build log and roadmap." />
   <meta name="theme-color" content="#1a2218" />
   <title>Project Sandtable — reforge-mcp for Arma Reforger</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -82,7 +82,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          reforge-mcp v0.1.0 · 71 tools · 23 handlers · 378 tests green · five acceptance capabilities proven · 3 known human-in-the-loop gaps
+          reforge-mcp v0.1.0 · 72 tools · 23 handlers · 385 tests green · five acceptance capabilities proven · 3 known human-in-the-loop gaps
         </p>
       </div>
       <div class="hero-signal" aria-hidden="true">
@@ -254,7 +254,7 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">The project · 71 tools · 23 handlers · all five acceptance capabilities proven</p>
+                <p class="duo-label">The project · 72 tools · 23 handlers · all five acceptance capabilities proven</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -396,6 +396,79 @@
         </div>
 
         <ol class="wn-list">
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>Running the workflows for real found what dry-running them could not</h3>
+              <p>
+                The rewritten configs were applied to a live addon, registered through the
+                editor, and loaded. Two results. The config fix is <strong>confirmed</strong>:
+                the engine parsed past the container and reached the entries, where the old
+                template would have died at the root on a class that does not exist. And a new
+                defect surfaced that no dry run could have shown — pointed at a plain
+                subdirectory rather than an addon, every tool wrote its files happily, the
+                <code>.conf</code> registered and was assigned a GUID, and the engine then
+                reported <code>Unknown class</code>, because Enfusion compiles scripts under an
+                addon's own <code>Scripts/</code> directory and nowhere else. Not a compile
+                error. No compilation at all.
+              </p>
+              <p>
+                The target folder is now checked for an <code>addon.gproj</code> before anything
+                is planned. Separately, <code>wb_inspect</code> turned out to have every part
+                except the line that ships it: handler, implementation and import all present,
+                documented in two files, and missing from the registration table — so it was
+                documented, implemented, and absent. That is 72 tools now, not 71.
+              </p>
+              <p class="wn-note">
+                Both defects have the same shape as the ones before them: the work succeeded at
+                every step that reports, and failed at the one that does not.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>The framework workflows were writing configs the engine cannot read</h3>
+              <p>
+                The six framework workflows check the base class of every script they generate —
+                that guard exists because getting it wrong is the classic silent failure. Nothing
+                checked the class names they wrote into the <em>configs</em>. Auditing all six
+                against the installed build found <strong>six classes that do not exist</strong>:
+                three invented outright (<code>SCR_EditorActionsConfig</code>,
+                <code>SCR_EditorAttributeCategoryList</code>, <code>SCR_PlaceableEntityItem</code>)
+                and three belonging to the framework that was cancelled before it was built.
+              </p>
+              <p>
+                So five of the six emitted at least one file that parses, loads and registers
+                nothing. The real shapes, read back out of the shipped configs, were different in
+                kind rather than in detail: an action list is <code>SCR_EditorActionList</code>
+                with per-entry GUID tokens and an <code>m_Info</code> block, not an id-and-name
+                pair; an attribute category is <em>its own resource file</em> referenced by GUID,
+                not a string naming a tab; and the placeable registry <em>exposes a directory</em>
+                rather than holding a list of items.
+              </p>
+              <p>
+                All three are rewritten against the shipped configs, and the systemic hole is
+                closed: every class name a workflow is about to write is now verified against your
+                build first, and an unbuilt index says so rather than reporting correct classes as
+                missing. Twelve new tests across the two trees.
+              </p>
+              <p class="wn-note">
+                One test had been asserting the bug. It checked the generated action list contained
+                <code>m_aActions +{</code> and passed for as long as that was what the template
+                emitted — a test written against the template rather than against the engine
+                confirms whatever the template does, including nothing.
+              </p>
+            </div>
+          </li>
 
           <li class="wn-entry" data-wn-kind="changed">
             <div class="wn-meta">
@@ -1031,7 +1104,7 @@
     <section id="tools" class="section tools">
       <div class="section-inner">
         <p class="eyebrow">The toolbox</p>
-        <h2>71 tools shipping. Nothing left designed-but-absent.</h2>
+        <h2>72 tools shipping. Nothing left designed-but-absent.</h2>
         <p class="section-lede">
           Tools are grouped into <strong>capability tiers</strong>, and the tier decides
           whether a tool exists at all. Under the default <code>research</code> profile the
@@ -1047,7 +1120,7 @@
           </div>
           <div class="profile-chip is-opt">
             <span class="chip-name">workbench</span>
-            <span class="chip-meta">opt-in · 71 tools · guarded build pipeline</span>
+            <span class="chip-meta">opt-in · 72 tools · guarded build pipeline</span>
           </div>
         </div>
 
@@ -1171,6 +1244,14 @@
               each validates the contract <em>before</em> writing and refuses with a pointer to
               the clause, because every rule below guards a mistake that compiles cleanly and
               then misbehaves somewhere else.
+            </p>
+            <p class="tier-note">
+              Since 9 September that validation covers <em>both halves</em> of the output — the
+              base class of the generated script <strong>and</strong> every class name written
+              into the generated configs, each checked against your installed build. It did not
+              always: an audit that day found six config classes that do not exist, and five of
+              the six workflows were emitting at least one file that loaded and registered
+              nothing.
             </p>
             <ul class="tool-list">
               <li><code>framework_addon_new</code> <span>a scripted extension addon: manifest class the registrar can find, plus the folder layout the contract expects</span></li>
@@ -1846,7 +1927,7 @@
         </p>
 
         <p class="section-lede">
-          MIT, 71 tools, and it stands alone — it knows nothing about any framework and answers
+          MIT, 71 tools in the published build, and it stands alone — it knows nothing about any framework and answers
           questions about Enfusion. Clone it, point it at your own installation, build the
           indexes, and start in the read-only profile. No game content is redistributed: the
           indexes are generated locally, because they are derived from the copy of the game
@@ -1899,7 +1980,7 @@
       </div>
       <p>Status and explanation site for <code>reforge-mcp</code>, a research and Workbench MCP
         server for Arma Reforger. Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-09 · goal: an AI builds a Reforger mod unattended · 71 tools · 23 handlers · 378 tests · all five acceptance capabilities proven</p>
+      <p class="footer-meta">Updated from project status 2026-09-09 · goal: an AI builds a Reforger mod unattended · 72 tools · 23 handlers · 385 tests · all five acceptance capabilities proven</p>
     </div>
   </footer>
 

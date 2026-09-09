@@ -1,14 +1,20 @@
 # Project Sandtable — project site
 
 Static project site for **`reforge-mcp`** — an open-source research and Workbench MCP server
-for Arma Reforger / Enfusion. **71 tools, 366 tests.**
+for Arma Reforger / Enfusion. **72 tools, 23 handlers, 385 tests.**
 
-## The goal changed on 2026-09-09 (D-0017)
+## The goal (D-0017, restated 2026-09-09)
 
-The server is now the whole project. **The Game Master framework rebuild is cancelled.** Game
-Master remains the *target domain the server has to be able to mod* — the hardest thing to
-point it at, and therefore the measure of whether the server works. Its 14-feature list is a
-bank of test cases, not a roadmap.
+The server is the whole project, and its purpose is **autonomy**: an AI, handed a mod to build,
+finishes it with **no human input at any step** — research, authoring, compiling, loading,
+running, reading the log, fixing what broke. **The Game Master framework rebuild is cancelled.**
+Game Master is the hardest *worked example* to hold that standard against, not a deliverable;
+its 14-feature list is a bank of test cases, not a roadmap.
+
+Anywhere a person must still intervene is a **gap in the server**, and the page names those
+rather than presenting them as design. There are three today: Steam's custom-arguments prompt,
+Workbench dialogs outside the owner's explicit allowlist, and any judgement that can only be
+made by watching Play mode.
 
 That was decided on evidence. Building one small Game Master feature through the tooling — a
 context action reporting how far each selected entity floats above the terrain — surfaced
@@ -44,8 +50,11 @@ moves. When updating it, keep these distinctions intact:
   the last tool in the spec, ships. Figures are measured against Arma Reforger build
   24903726.
 - **The framework rebuild is cancelled (D-0017).** Nothing on the page may present Project
-  Sandtable as a product in progress. Game Master is the *benchmark domain*, the F-list and
-  the 14 wanted features are a **test-case bank**, and phase 8 is retired.
+  Sandtable as a product in progress. Game Master is the *hardest worked example*, the F-list
+  and the 14 wanted features are a **test-case bank**, and phase 8 is retired.
+- **The bar is an unattended build, and the gaps are named.** The page must not describe a
+  human-in-the-loop step as intentional polish. Steam's prompt is a security control the
+  server will not defeat — say that, and still count it as a gap.
 - **The three "novel capabilities"** — concurrent multi-GM editing, multi-step undo/redo in
   a live session, and live triggers — are neither promised nor being built. They are on the
   page as the hardest test cases, and must stay framed that way.
@@ -59,14 +68,17 @@ moves. When updating it, keep these distinctions intact:
 - **The handlers section explains the bridge, not the tooling.** It is the part readers ask
   about most: how a program outside the game drives the editor inside it. Keep it conceptual —
   no code, no file paths — and keep the honest cost in it, including that one bad handler edit
-  takes the whole bridge down. There are **23** handlers.
+  takes the whole bridge down. There are **23** handlers, named `SANDTABLE_WB_*` since
+  2026-09-09; the class name is the wire protocol, so renaming one is a protocol change.
 - **"What's new" is a build log, not a highlight reel.** Defects found and fixed belong in it
   alongside features; several current entries are bugs, deliberately. Entries are added when
   work lands, each traceable to `EVIDENCE_LEDGER.md`, and **dated entries are not rewritten
   as history moves on** — a later entry supersedes an earlier one rather than editing it.
 
-If a number or a status on the page cannot be traced to `GameMasterMod/docs/`
-(`STATUS.md`, `EVIDENCE_LEDGER.md`, the current checkpoint), it should not be on the page.
+If a number or a status on the page cannot be traced to something that can be re-run — a test
+count, `capabilities`, `diagnose`, a lint pass, an index build stamp — it should not be on the
+page. (The old rule pointed at `GameMasterMod/docs/`; that tree was deleted on 2026-09-09, and
+a traceability rule aimed at a folder that no longer exists is worse than none.)
 
 ## Structure
 
@@ -93,8 +105,20 @@ work through the server and fixing what blocks it.
 
 All five acceptance capabilities are proven. `Sandtable.GroundCheck`, a custom Game Master
 context action authored through the tooling, runs in a live session. Handler lint is clean
-across 23 files with 17 committed regression tests behind it. Nine skills live in
-`.claude/skills/`, mirrored to `.agents/skills/` for the Antigravity runtime.
+across 23 files in both trees; suites are 385 green (private) and 366 green with 3 intentional
+skips (open source).
+
+The workspace was reorganised on 2026-09-09: the old project tree and both Game Master addons
+were deleted, and the config, tests and indexes were repaired to match. The handlers were
+renamed `EMCP_WB_*` -> `SANDTABLE_WB_*` at the same time, and that rename is **verified live**
+— Workbench launched on the handler addon, the log shows the addon loaded and the script module
+compiled with zero errors, and Ping, GetState, Layers, Terrain, Clipboard and ScriptEditor all
+answered under their new names.
+
+Repairing the config also surfaced its own bug: a path whose backslashes had been stripped
+(`C:Program Files…`) is legal drive-relative syntax on Windows, so the server started normally
+with every root silently pointing elsewhere. That is now refused at startup with the cause
+named.
 
 Not affiliated with Bohemia Interactive. No Bohemia content is redistributed — every index
 `reforge-mcp` uses is generated from the user's own installation.
