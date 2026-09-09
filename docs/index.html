@@ -54,18 +54,21 @@
         <div class="brand-mark logo-crop logo-crop-hero">
           <img src="assets/project-sandtable-logo.png" alt="Project Sandtable" width="2000" height="2000" />
         </div>
-        <h1>The server is the project.</h1>
+        <h1>Mods built without a human in the loop.</h1>
         <p class="hero-lede">
           <strong>reforge-mcp</strong> is a research and Workbench-automation server for
-          Enfusion, built entirely from your own installation. Its goal is that a real Arma
-          Reforger mod can be built <em>through</em> it — and <strong>Game Master</strong>,
-          Reforger’s live scenario editor, is the benchmark: the hardest thing in the game to
-          point tooling at, and therefore the measure of whether the tooling works.
+          Enfusion, built entirely from your own installation. Its purpose is that an AI can
+          do <em>everything</em> — research the engine, write the files, drive the editor,
+          compile, load and run — and build a working Arma Reforger mod with no human input
+          at any step.
         </p>
         <p class="hero-note">
-          Work in progress, in the open. The server reads the game, drives the editor and
-          writes carefully — and a custom Game Master action built through it has been watched
-          running in a live session.
+          Work in progress, in the open, and measured by what it cannot yet do unattended.
+          The server reads the game, drives Workbench and writes carefully — a custom
+          <strong>Game Master</strong> action built through it has been watched running in a
+          live session, and a whole cooperative scenario mod has since been authored through
+          it and compiles clean. The remaining points where a person must still intervene are
+          listed below as defects, not as caveats.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#roadmap">
@@ -79,7 +82,7 @@
         </div>
         <p class="hero-status">
           <span class="pulse"></span>
-          reforge-mcp v0.1.0 · the project (D-0017) · 71 tools · 366 tests green · five acceptance capabilities proven
+          reforge-mcp v0.1.0 · 71 tools · 23 handlers · 372 tests green · five acceptance capabilities proven · 3 known human-in-the-loop gaps
         </p>
       </div>
       <div class="hero-signal" aria-hidden="true">
@@ -104,26 +107,28 @@
         <h2>What this is, and why the tooling leads.</h2>
 
         <p class="section-lede">
-          Two things are being built here. <strong>reforge-mcp</strong> is a server that lets
-          an AI assistant — or a person — ask precise questions about Arma Reforger’s engine
-          and, optionally, drive the Workbench editor directly. <strong>Project Sandtable</strong>
-          is a framework to make Game Master a real authoring environment: an editor you can
-          use to build a scenario <em>while the session is running</em>, with the depth Arma 3’s
-          3DEN has offline.
+          <strong>Project Sandtable is one thing: <code>reforge-mcp</code>.</strong> It is a
+          server that lets an AI ask precise questions about Arma Reforger’s engine and drive
+          the Workbench editor directly — and the point of it is <em>autonomy</em>. Not an
+          assistant that helps a modder work faster, but a server complete enough that the AI
+          does the whole job: reads the engine, writes the scripts and configs, drives the
+          editor, compiles, loads a world, runs it, reads the log, and fixes what broke.
         </p>
 
         <p class="section-lede">
-          <strong>As of 9 September 2026 the server is the whole of it.</strong> The framework
-          rebuild is cancelled. Game Master is now the <em>target domain the server has to be
-          able to mod</em> — the hardest thing to point it at, and therefore the measure of
-          whether it works.
+          That is the bar the page is written against. <strong>Anywhere a person still has to
+          step in, the server is incomplete</strong> — and those places are named here rather
+          than smoothed over. Building any Reforger mod counts; <strong>Game Master</strong>,
+          Reforger’s live scenario editor, is used as the hardest worked example, because
+          tooling that can reach into a running, network-replicated editor can reach most
+          other things too.
         </p>
 
         <p class="section-lede">
-          That was not a change of taste. Building one small Game Master feature through the
-          tooling — a context action that reports how far each selected entity floats above the
-          terrain — surfaced <strong>seven separate defects in the tooling meant to make it
-          easy</strong>. Every one compiled cleanly and failed silently: a base-class check that
+          This is measured by attempt, not by inventory. Building one small Game Master
+          feature through the tooling — a context action that reports how far each selected
+          entity floats above the terrain — surfaced <strong>seven separate defects in the
+          tooling meant to make it easy</strong>. Every one compiled cleanly and failed silently: a base-class check that
           rejected the only base real context actions use, generated code with method signatures
           that could not compile, a config file with no GUID so the engine never registered it,
           and an action the engine loaded, merged, evaluated and then hid because one method was
@@ -132,9 +137,10 @@
         </p>
 
         <p class="section-lede">
-          So the goal is measured by attempt, not by inventory: <strong>can a real mod be built
-          with this?</strong> Every friction point met while trying counts as a defect in the
-          server rather than something to work around by hand.
+          So the question is not how many tools exist. It is: <strong>can an AI build a real
+          mod with this, unattended?</strong> Every friction point met while trying counts as
+          a defect in the server — including every point where the answer was “a human does
+          that part”.
         </p>
 
         <div class="mission-grid">
@@ -160,21 +166,21 @@
           </article>
           <article class="mission-point">
             <img src="assets/icons/target.png" alt="" width="36" height="36" />
-            <h3>The framework is the proving ground</h3>
+            <h3>Real mods are the proving ground</h3>
             <p>
-              Sandtable is not a customer of the server so much as its hardest test. Nearly
-              every capability the server has — GUID resolution, override detection, live
-              editor mutation with undo — exists because building the framework demanded it and
-              the naive version turned out to be wrong.
+              Nearly every capability the server has — GUID resolution, override detection,
+              live editor mutation with undo — exists because an actual build attempt demanded
+              it and the naive version turned out to be wrong. Features nobody tried to use
+              were the ones that shipped broken.
             </p>
           </article>
         </div>
 
         <p class="proof-line">
           <img src="assets/icons/Info.svg" alt="" width="20" height="20" />
-          Which is also why the server is useful on its own. It knows nothing about Sandtable;
-          it answers questions about Enfusion. Any Reforger modder facing the same stale-docs
-          problem can use it without adopting the framework, or caring that it exists.
+          Which is also why the server is useful to a person, not only to an AI. It carries no
+          framework and assumes no particular mod; it answers questions about Enfusion. Any
+          Reforger modder facing the same stale-docs problem can adopt it on its own terms.
         </p>
       </div>
     </section>
@@ -182,31 +188,43 @@
     <section id="mission" class="section mission">
       <div class="section-inner">
         <p class="eyebrow">The mission</p>
-        <h2>Make Game Master moddable from an assistant, comfortably.</h2>
+        <h2>The AI does everything. That is the whole point.</h2>
         <p class="section-lede">
-          The measure is not how many tools exist. It is whether someone — or something —
-          can sit down and build a real Game Master feature end to end through this server:
-          author it, compile it, load it, and watch it run, without hand-editing files or
-          hand-driving the editor. Every friction point met on that path is counted as a
-          defect in the server rather than something to work around.
+          The measure is not how many tools exist. It is whether an AI can be handed “build
+          this mod” and finish it: research the engine, author the scripts and configs,
+          register the resources, compile, load a world, run it, read the log, and fix what
+          broke — <strong>without a human touching a file, a menu, or a dialog</strong>. Every
+          friction point on that path is counted as a defect in the server, and every point
+          where a person is still required is counted as an unfinished part of the job.
         </p>
         <p class="section-lede">
           Hence the name. A <strong>sand table</strong> is the terrain model commanders
-          gather around to plan and rehearse an operation — rearranged by hand, in the open,
-          by several people at once, while the situation is still moving. Game Master is that
-          table, and it is the hardest thing in Reforger to point tooling at. That is exactly
-          why it is the benchmark.
+          gather around to plan and rehearse an operation — rearranged in the open, by
+          several hands, while the situation is still moving. Game Master is that table, and
+          it is the hardest thing in Reforger to point tooling at, which is why it is the
+          worked example the server is pushed through.
+        </p>
+        <p class="section-lede">
+          <strong>Three places still need a person</strong>, and they are stated as gaps
+          rather than as design. <em>One</em>: launching the game goes through Steam’s own
+          confirmation prompt for custom arguments — a deliberate security control that is
+          not the server’s to bypass, so the honest status is “blocked by design, and still a
+          gap”. <em>Two</em>: four known Workbench dialogs are answered only because the owner
+          listed them explicitly; anything unlisted is refused rather than guessed at, so a
+          new dialog stops the run. <em>Three</em>: whether what happens on screen in Play
+          mode actually reads well to a player is a human judgement, and nothing in the
+          server attempts it.
         </p>
         <div class="mission-grid">
           <article class="mission-point">
             <img src="assets/icons/target.png" alt="" width="40" height="40" />
             <h3>Preserve vanilla</h3>
-            <p>Anything built through the server is additive. Vanilla panels, actions and content stay — a tool that has to break Game Master to change it has failed.</p>
+            <p>Anything built through the server is additive. Vanilla panels, actions and content stay — a tool that has to break the game to change it has failed, and an unattended run is exactly when nobody is watching for that.</p>
           </article>
           <article class="mission-point">
             <img src="assets/icons/expand.png" alt="" width="40" height="40" />
-            <h3>Documented contracts</h3>
-            <p>Content-only config merges and scripted registration points, so what the server generates never touches the engine’s fragile surfaces by hand.</p>
+            <h3>Refuse rather than guess</h3>
+            <p>Content-only config merges and scripted registration points, validated against the contract before anything is written. An unattended writer that produces something plausible-but-wrong is worse than one that stops and says why.</p>
           </article>
           <article class="mission-point">
             <img src="assets/icons/friends.png" alt="" width="40" height="40" />
@@ -219,15 +237,16 @@
 
     <section id="deliverables" class="section deliverables">
       <div class="section-inner">
-        <p class="eyebrow">One deliverable, one benchmark</p>
-        <h2>The server is the project. Game Master is how it is measured.</h2>
+        <p class="eyebrow">One deliverable, one bar</p>
+        <h2>One server. The bar is an unattended build.</h2>
         <p class="section-lede">
           There used to be two deliverables here. Since <strong>D-0017</strong> there is one:
-          <code>reforge-mcp</code>. The Game Master framework rebuild is cancelled as a product,
-          and Game Master remains as the <em>target domain the server has to be able to mod</em> —
-          the hardest thing in Reforger to point tooling at, and therefore the honest test of
-          whether the tooling works. The server is intended for open-source handoff and can be
-          adopted entirely on its own, by anyone modding Reforger.
+          <code>reforge-mcp</code>. The Game Master framework rebuild is cancelled as a product.
+          What replaces it as the measure is not another product but a <em>standard</em>: an AI,
+          given a mod to build, finishes it without human input. Game Master is the hardest
+          worked example to hold that standard against, not the thing being shipped. The server
+          is intended for open-source handoff and can be adopted entirely on its own, by anyone
+          modding Reforger.
         </p>
 
         <div class="duo">
@@ -235,7 +254,7 @@
             <div class="duo-head">
               <img src="assets/icons/search.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">The project · 71 tools · all five acceptance capabilities proven</p>
+                <p class="duo-label">The project · 71 tools · 23 handlers · all five acceptance capabilities proven</p>
                 <h3>reforge-mcp</h3>
               </div>
             </div>
@@ -258,22 +277,24 @@
             <div class="duo-head">
               <img src="assets/icons/flag.png" alt="" width="48" height="48" />
               <div>
-                <p class="duo-label">Not a product · the benchmark the server is judged against</p>
-                <h3>Game Master</h3>
+                <p class="duo-label">Not a product · the worked example the server is pushed through</p>
+                <h3>Arma Reforger mods</h3>
               </div>
             </div>
             <p>
-              Reforger’s live, network-replicated scenario editor — and the domain the server
-              has to be able to mod. It was going to be rebuilt; it is not being rebuilt.
-              What survives is the extension contract and the spine that proves the approach
-              works, both of which are now used as <em>test material</em>: concrete, non-trivial
-              things to attempt through the server so that its gaps show up as failures rather
-              than as omissions nobody noticed.
+              Any Reforger mod is in scope, and the ones actually attempted are what shape the
+              server. <strong>Game Master</strong> — Reforger’s live, network-replicated
+              scenario editor — is the hardest of them, so it gets used as the standing test:
+              if a tool can reach into a running editor safely, it can reach most other things.
+              The framework that was going to be rebuilt is not being rebuilt; what survives is
+              the extension contract, now used as <em>test material</em>, so gaps show up as
+              failures rather than as omissions nobody noticed.
             </p>
             <ul class="duo-list">
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">Content-only + scripted extension tiers, both exercised</span></li>
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">The fragile <code>EditorModeEdit.et</code> surface, overridden without breakage</span></li>
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">A tier-B context action built and running in a live session</span></li>
+              <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">A full cooperative scenario mod authored through the server, compiling clean</span></li>
               <li><img src="assets/icons/Tick.svg" alt="" /> <span class="icon-copy">F-1…F-15 — a bank of test cases, not a roadmap</span></li>
             </ul>
           </article>
@@ -292,12 +313,16 @@
         </p>
         <p class="section-lede">
           Beyond the indexes: the live bridge into Workbench is up, the full write set has been
-          exercised against a loaded world of 173,637 entities, and a custom Game Master action
-          built through this tooling has been watched running inside a live session. Workbench
+          exercised against a loaded world of 173,637 entities, a custom Game Master action built
+          through this tooling has been watched running inside a live session, and a complete
+          cooperative scenario mod has been authored through the server and compiles with zero
+          script errors. Workbench
           can be launched on a chosen project, made to load a world, switched between Edit and
-          Play, and closed again — all driven from outside. One human click remains, and stays
-          on purpose: Steam’s own confirmation prompt for launching with custom arguments,
-          which is the thing guarding exactly this capability.
+          Play, and closed again — all driven from outside. <strong>One human click still
+          breaks the chain</strong>: Steam’s own confirmation prompt for launching with custom
+          arguments. It is a security control guarding exactly this capability and not the
+          server’s to defeat — but against the goal of an unattended build it is a gap, and it
+          is counted as one rather than explained away.
         </p>
 
         <div class="stat-grid">
@@ -371,6 +396,113 @@
         </div>
 
         <ol class="wn-list">
+
+          <li class="wn-entry" data-wn-kind="changed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-changed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Changed</span>
+            </div>
+            <div class="wn-body">
+              <h3>The bridge handlers carry the project’s own name now</h3>
+              <p>
+                The 23 handler classes inside Workbench were still named for the third-party
+                server this project started from. They are now <code>SANDTABLE_WB_*</code>, in a
+                <code>Scripts/WorkbenchGame/Sandtable/</code> folder, across both the private and
+                open-source copies. This is not cosmetic: <strong>the class name is the wire
+                protocol</strong> — a request names the class it wants — so the rename had to land
+                atomically in the handlers, the server that calls them, the safety allowlists and
+                the tests, or the bridge would answer nothing.
+              </p>
+              <p>
+                Handler lint is clean on all 23 files in both trees, and both suites are green —
+                372 tests private, 353 plus 3 intentional skips open source.
+              </p>
+              <p class="wn-note">
+                Stated plainly: lint and tests are not a compile. Nothing has been through
+                Workbench since the rename, so “the bridge still answers” is unproven until the
+                editor has been restarted and asked.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>The config had been quietly pointing at deleted folders</h3>
+              <p>
+                A workspace reorganisation removed the old project tree and two addons. Nothing
+                announced it. What was left behind: two of three configured roots pointed at
+                folders that no longer existed, the docs path pointed into a deleted tree, the
+                declared profile contradicted the one actually launched, the handler addon still
+                declared a dependency on a deleted addon’s GUID, and the resource index still
+                answered with paths inside it — so a same-GUID override check could be
+                “verified” against a file that was gone.
+              </p>
+              <p>
+                All of it is repaired and re-indexed from the installed build. Two tests that had
+                been asserting on the deleted addon were rewritten to assert on the code rather
+                than on the owner’s config — one of them had been demanding that <em>some</em>
+                framework root exist, which made a passing test a statement about a folder
+                instead of about the server.
+              </p>
+              <p class="wn-note">
+                Worth naming as the pattern: none of this failed loudly. It sat as stale truth in
+                a config file, which is exactly the failure mode an unattended run cannot notice.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="new">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-new"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />New</span>
+            </div>
+            <div class="wn-body">
+              <h3>A whole mod, built through the server</h3>
+              <p>
+                The question this project now exists to answer — <em>can a real mod be built with
+                this?</em> — has its first substantial answer. A cooperative scenario mod was
+                authored end to end through the tooling: replicated component state with
+                server-authoritative transitions, a continuous repair interaction with distance
+                and interruption handling, a coverage evaluation over relay positions, three
+                authored incidents, a Game Master action for inspecting and toggling a relay, and
+                its own documentation set.
+              </p>
+              <p>
+                It compiles clean — zero script errors across all four modules, checked headlessly
+                in seconds rather than by restarting the editor. Three defects surfaced on the way
+                and every one was fixed from log evidence rather than guesswork: a component that
+                could not be allocated the way the code assumed, a class-binding mismatch the
+                engine reported plainly once anyone read the log, and a same-GUID override that had
+                to be renamed to match its target’s exact path, because Enfusion matches overrides
+                by path as well as by GUID.
+              </p>
+              <p class="wn-note">
+                Still unproven, and stated as such: everything that can only be seen in Play mode.
+                The scripts load and the logic compiles; whether the on-screen prompts read well to
+                a player is a human’s judgement and has not been made yet.
+              </p>
+            </div>
+          </li>
+
+          <li class="wn-entry" data-wn-kind="fixed">
+            <div class="wn-meta">
+              <time datetime="2026-09-09">9 Sep 2026</time>
+              <span class="wn-tag t-fixed"><img src="assets/icons/Star.svg" alt="" width="12" height="12" />Fixed</span>
+            </div>
+            <div class="wn-body">
+              <h3>Entity names came back as raw localization keys</h3>
+              <p>
+                The ground-check action reported entities by an identifier like
+                <code>#AR-Role_CC</code> rather than a readable name — cosmetic, but it degraded
+                the exact diagnostic the action exists to produce. The name now goes through the
+                engine’s own translation call before it is printed.
+              </p>
+            </div>
+          </li>
 
           <li class="wn-entry" data-wn-kind="changed">
             <div class="wn-meta">
@@ -1277,10 +1409,10 @@
         <h2>Three things nobody has done live in Arma.</h2>
         <p class="section-lede">
           These are <strong>not promises and not shipped features</strong> — nothing is being
-          built to deliver them. They are here as the hardest test cases on the list: each is
-          rated hard in the feasibility notes <em>and</em> sits at the top of the community’s
-          complaints, which makes each one a good way to find out where the server stops being
-          useful.
+          built to deliver them. They are here as the hardest things anyone could hand an AI and
+          say “build this”: each is rated hard in the feasibility notes <em>and</em> sits at the
+          top of the community’s complaints. That combination makes them the most useful place
+          to find out where the server stops being enough on its own.
         </p>
         <div class="novel-grid">
           <article>
@@ -1317,10 +1449,12 @@
         <p class="section-lede">
           What remains is not thirteen features. It is <em>attempting</em> them through the
           server and fixing whatever gets in the way. The feature list below is kept as a bank
-          of test cases — each one a concrete, non-trivial thing to point the tooling at — and
-          the honest next steps are the friction already identified: an AI-inspection call that
-          has never run against real AI groups, a packaging path where only the compile check has
-          executed, and a display name that comes back as a raw localization key.
+          of test cases — each one a concrete, non-trivial thing to point the tooling at. That is
+          no longer hypothetical: an entire cooperative scenario mod has since been authored
+          through the server and compiles clean. The honest next steps are the friction still
+          outstanding — an AI-inspection call that has never run against real AI groups, a
+          packaging path where only the compile check has executed, and a set of in-game
+          behaviours that only a human in Play mode can confirm.
         </p>
 
         <div class="roadmap-tabs" role="tablist" aria-label="Roadmap views">
@@ -1730,7 +1864,7 @@
       </div>
       <p>Status and explanation site for <code>reforge-mcp</code>, a research and Workbench MCP
         server for Arma Reforger. Not affiliated with Bohemia Interactive. Arma Reforger™ is a trademark of its respective owners.</p>
-      <p class="footer-meta">Updated from project status 2026-09-09 · reforge-mcp is the project (D-0017) · 71 tools · 23 handlers · 366 tests · all five acceptance capabilities proven</p>
+      <p class="footer-meta">Updated from project status 2026-09-09 · goal: an AI builds a Reforger mod unattended · 71 tools · 23 handlers · 372 tests · all five acceptance capabilities proven</p>
     </div>
   </footer>
 
